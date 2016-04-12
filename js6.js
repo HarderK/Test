@@ -105,5 +105,4 @@ function Person(name,age,job){
 function sayName(){
 	console.log(this.name);
 }
-test;
 
