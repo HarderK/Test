@@ -167,3 +167,23 @@ var colors2 = colorText.split(",",2);
 console.log(colors2);
 var colors3 = colorText.split(/[\,]+/);
 console.log(colors3);
+
+var uri = "http://www.wrox.com/illegal value.html#start";
+var uri1 = encodeURI(uri);
+var uri2 = encodeURIComponent(uri);
+console.log(encodeURI(uri));
+console.log(encodeURIComponent(uri));
+
+console.log(decodeURI(uri2));
+console.log(decodeURIComponent(uri1));
+
+var global = function(){
+	return this;
+}
+
+console.log(Math.E);
+
+var values = [1,2,3,4,5,6,8,2,1];
+var max = Math.max.apply(Math,values);
+console.log(max);
+
