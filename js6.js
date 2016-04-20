@@ -248,3 +248,29 @@ function Person5(name,age,job){
 
 person = new Person5("Haha",35,"singer");
 person.sayName();
+
+/**
+ * 寄生构造函数
+ */
+function Person6(name,age,job){
+	var o = new Object();
+	o.name = name;
+	o.age = age;
+	o.job = job;
+	o.sayName = function(){
+		console.log(this.name);
+	}
+	return o;
+}
+
+friend = new Person6("King",29,"Manager");
+//console.log(friend);
+friend.sayName();
+
+/**
+ * 稳妥构造函数
+ */
+function Person7(name,age,job){
+	var o = new Object();
+	
+}
