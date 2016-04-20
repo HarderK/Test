@@ -274,3 +274,61 @@ function Person7(name,age,job){
 	var o = new Object();
 	
 }
+
+
+/**
+ * 6.3 继承，原型链
+ */
+function SuperType(){
+	this.property = true;
+	this.colors = ["red","blue","green"];
+
+}
+
+SuperType.prototype.getSuperValue = function(){
+	return this.property;
+};
+
+function SubType(){
+	this.subproperty = false;
+}
+
+SubType.prototype = new SuperType();
+
+SubType.prototype.getSubValue = function(){
+	return this.subproperty;
+};
+
+//重写超类中的方法
+SubType.prototype.getSuperValue = function(){
+	return 1;
+}
+
+var instance = new SubType();
+
+console.log(instance.getSuperValue());
+
+console.log(instance instanceof SuperType);		//只要是原型链中出现过的原型，都可以说是该原型链所派生的实例的原型
+
+console.log(SubType.prototype.isPrototypeOf(instance));
+
+
+//原型链的问题
+instance.colors.push("black");
+
+var instance2 = new SubType();
+console.log(instance2.colors);
+
+/**
+ * 借用构造函数
+ */
+ function Super(name){
+ 	this.name = name;
+ }
+ function Sub(name){
+ 	Super.call(this,name);
+ }
+ instance = new Sub("HAHA");
+ console.log(instance.name);
+
+
