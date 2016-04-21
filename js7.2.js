@@ -68,3 +68,12 @@ var object = {
 };
 
 console.log(object.getNameFunc()());
+
+//内存泄漏
+function assignHandler(){
+	var element = document.getElementById("someElement");
+
+	element.onclick = function(){
+		alert(element.id);
+	};
+}				//会造成循环引用，匿名函数存在，则element占用的内存不会被回收。
