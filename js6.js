@@ -331,4 +331,110 @@ console.log(instance2.colors);
  instance = new Sub("HAHA");
  console.log(instance.name);
 
+ /**
+  * 6.3.3组合继承
+  */
+ function SuperType1(name){
+ 	this.name = name;
+ 	this.colors = ["red","blue","green"];
+ }
+
+ SuperType1.prototype.sayName = function(){
+ 	console.log(this.name);
+ }
+
+ function SubType1(name,age){
+ 	this.age = age;
+ 	SuperType1.call(this,name);
+ }
+
+ SubType1.prototype = new SuperType1();
+ SubType.prototype.constructor = SubType1;
+ console.log(SubType1.prototype);	//原型对象中含有name属性
+
+ instance = new SubType1("Kingzg",40);
+ console.log(instance.name);
+ console.log(!instance.hasOwnProperty("name") && "name" in instance );		//检验是否是原型属性
+
+ instance.colors.push("black");
+ console.log(instance.colors);
+
+ instance2 = new SubType1("HAHA",35);
+ console.log(instance2.colors);
+
+ console.log(SuperType1.prototype.isPrototypeOf(instance));		//是否是该原型链所派生的实例
+ console.log(instance instanceof SuperType1);		//
+
+
+/**
+ * 6.3.4原型式继承
+ */
+function object(o){
+	function F(){}
+	F.prototype = o;
+	return new F();
+}
+
+person = {
+	name : "Nicholas",
+	friend : ["Shelby","Court","Van"]
+};
+
+var anotherPerson = object(person);
+console.log(anotherPerson.name);
+
+console.log(hasPrototypeProperty(anotherPerson,"friend"));	//检测得到friend为原型属性
+
+anotherPerson = Object.create(person,{
+	name:{value:"Greg"},
+	age:{value:28}
+});
+
+console.log(anotherPerson.name);
+console.log(anotherPerson.age);
+console.log(anotherPerson.hasOwnProperty("name"));		//name属性为实例属性
+
+
+/**
+ * 6.3.5寄生式继承
+ */
+function createAnother(original){
+	var clone = object(original);
+	clone.sayHi = function(){		//以某种方式来增强这个对象
+		console.log("hi");
+	};
+	return clone;
+}
+anotherPerson = createAnother(person);
+anotherPerson.sayHi();
+
+/**
+ * 寄生组合式继承
+ */
+function inheritPrototype(subType,superType){
+	var prototype = object(superType.prototype);
+	prototype.constructor = subType;
+	subType.prototype = prototype;
+}
+
+function Sup(name){
+	this.name = name;
+	this.colors = ["red","blue","green"];
+
+}
+
+Sup.prototype.sayName = function(){
+	console.log(this.name);
+}
+
+function Sub(name,age){
+	Sup.call(this,name);
+	this.age = age;
+}
+
+inheritPrototype(Sub,Sup);
+instance = new Sub("HAHA",25);
+console.log(instance);
+instance.sayName();
+console.log(instance.hasOwnProperty("sayName"));		//检测sayName()不是原型属性
 
