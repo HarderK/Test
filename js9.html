@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>第九章</title>
+</head>
+<body>
+	<script type="text/javascript">
+	alert(typeof(document.getElementById));		//尽量使用typeof进行能力检测
+
+	var isFirefox = !!(navigator.vendor && navigator.vendorSub);
+	var isIE = !!(document.all && document.uniqueID);
+
+	var hasDontEnumQuirk = function(){
+		var o = {toString : function(){}};
+
+		for(var prop in o){
+			if(prop == "toString"){
+				return false;
+			}
+		}
+		return true;
+	}();
+
+	var hasEnumShadowQuirk = function(){
+		var o = {toString : function(){}};
+		var count = 0;
+		for(var prop in o){
+			if(prop == "toString"){
+				count++
+			}
+		}
+		return (count > 1);
+	}();
+	</script>
+</body>
+</html>

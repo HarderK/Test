@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div>
+		<p>test1</p>
+	</div>
+	<div>
+		<p>test2</p>
+	</div>
+	<div>
+		<p>test3</p>
+	</div>
+	<div>
+		<p>test4</p>
+	</div>
+	
+	<script type="text/javascript">
+	var element = document.getElementsByTagName("body");
+	alert(element.item(0).childNodes.length);
+	function convertToArray(nodes){
+		var array = null;
+		try{
+			array = Array.prototype.slice.call(nodes,0);
+		}catch(ex){
+			array = new array();
+			for(var i=0, len=nodes.length; i<len; i++){
+				array.push(nodes[i]);
+			}
+		}
+		return array;
+	}
+	var arr = convertToArray(element.item(0).childNodes);
+	alert(arr[0]);
+
+	if(element[0].nextSibling === null){
+		alert("最后一个节点");
+	}else if(element[0].previousSibling === null){
+		alert("第一个节点");
+	}
+
+	alert(element[0].ownerDocument.nodeName);
+	alert(element[0].hasChildNodes());
+	</script>	
+</body>
+
+</html>
