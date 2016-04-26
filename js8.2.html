@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+	alert(window.location.toString());
+	alert(window.location.pathname);
+
+	alert(typeof(decodeURIComponent(location.href)));	//string
+	function getQueryStringArgs(){
+		//取得查询字符串，并去掉开头的问号
+		var qs = (location.search.length > 0 ? location.search.substring(1) : ""),
+
+		//保存数据对象
+		args = {},
+		items = qs.length ? qs.split("&") : [],		//一个字符串数组，通过分界符将字串分割创建。
+		item = null,
+		name = null,
+		value = null,
+		i = 0,
+		len = items.length;
+
+		for(i=0;i<len;i++){
+			item = items[i].split("=");
+			name = decodeURIComponent(item[0]);
+			value = decodeURIComponent(item[1]);
+
+			if(name.length){
+				args[name] = value;	//对象的两种访问属性的形式，使用变量访问属性可以使用中括号
+			}
+		}
+		return args;
+
+
+	}
+
+		var args = getQueryStringArgs();
+		alert(args["q"]);
+
+		//location.href = "http://www.baidu.com";
+		setTimeout(function(){location.replace("http://www.baidu.com")},2000);	
+
+
+	</script>
+</body>
+</html>
