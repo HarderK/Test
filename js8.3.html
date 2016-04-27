@@ -6,13 +6,13 @@
 </head>
 <body>
 	<script>
-	//alert(window.navigator.appCodeName);
-	//alert(window.navigator.appVersion);
+	//console.log(window.navigator.appCodeName);
+	//console.log(window.navigator.appVersion);
 
 	var plugin = navigator.plugins;
-	//alert(plugin);
+	//console.log(plugin);
 	for(i=0;i<plugin.length;i++){
-		alert(plugin[i].name);
+		console.log(plugin[i].name);
 	}
 
 	//检测插件（IE）中无效
@@ -27,7 +27,7 @@
 		return false;
 	}
 
-	alert(hasPlugin("Flash"));
+	console.log(hasPlugin("Flash"));
 
 	//检测IE中的插件
 	function hasIEPlugin(name){
@@ -50,13 +50,13 @@
 		return result;
 	}
 
-	alert(screen.availWidth+"and"+screen.availHeight);
-	alert(screen.width+"and"+screen.height);
+	console.log(screen.availWidth+"and"+screen.availHeight);
+	console.log(screen.width+"and"+screen.height);
 
 	if(history.length == 1){
-		alert("第一次打开页面");
+		console.log("第一次打开页面");
 	}
-	alert(history.length);
+	console.log(history.length);
 	</script>
 </body>
 </html>

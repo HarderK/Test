@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="myDiv" name="haha">
+		<div>test1</div>
+		<div name="test">test2</div>
+		<div>test3</div>
+		<div>test4</div>
+	</div>
+	<script type="text/javascript">
+	// var html = document.documentElement;
+	// console.log(html.nodeName);
+	// console.log(html.nodeType);
+	// console.log(document.childNodes[0].nodeName);
+	// console.log(document.body.nodeName);
+	console.log(document.doctype.nodeType);
+	console.log(document.childNodes[0].nodeType);		//firefox中显示DocumentType,chrome中是文档元素
+	var originalTitle = document.title;
+	document.title = "new Page Title";		//设置文档标题
+	console.log(originalTitle);
+	console.log(document.title);
+
+	function outputAttributes(element){
+		var pairs = new Array(),
+			attrName,
+			attrValue,
+			i,
+			len;
+		for(i=0, len=element.attributes.length; i < len; i++){
+			attrName = element.attributes[i].nodeName;
+			attrValue = element.attributes[i].nodeValue;
+			if(element.attributes[i].specified){
+				pairs.push(attrName + "=\"" + attrValue + "\"");
+			}
+			
+		return pairs.join(" ");
+		}
+	}
+	var divs = document.getElementsByTagName("div");
+	console.log(outputAttributes(divs[0]));
+
+	</script>
+</body>
+</html>

@@ -6,10 +6,10 @@
 </head>
 <body>
 	<script type="text/javascript">
-	alert(window.location.toString());
-	alert(window.location.pathname);
+	console.log(window.location.toString());
+	console.log(window.location.pathname);
 
-	alert(typeof(decodeURIComponent(location.href)));	//string
+	console.log(typeof(decodeURIComponent(location.href)));	//string
 	function getQueryStringArgs(){
 		//取得查询字符串，并去掉开头的问号
 		var qs = (location.search.length > 0 ? location.search.substring(1) : ""),
@@ -38,7 +38,7 @@
 	}
 
 		var args = getQueryStringArgs();
-		alert(args["q"]);
+		console.log(args["q"]);
 
 		//location.href = "http://www.baidu.com";
 		setTimeout(function(){location.replace("http://www.baidu.com")},2000);	

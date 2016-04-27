@@ -12,13 +12,13 @@
 		window.color = "red";
 
 		delete window.age;
-		//alert(delete age);		//false
+		//console.log(delete age);		//false
 		delete window.color;	//等同于delete color;
-		//alert(delete color);	
+		//console.log(delete color);	
 
 		
-		/*alert(window.age);
-		alert(window.color);*/
+		/*console.log(window.age);
+		console.log(window.color);*/
 
 		//var newValue = oldValue;		//提示错误oldValue未定义
 
@@ -27,27 +27,27 @@
 		var leftPos = (typeof window.screenLeft == "number") ? window.screenLeft : window.screenX;
 		var topPos = (typeof window.screenTop == "number") ? window.screenTop : window.screenY;
 
-		/*alert(leftPos+"and"+topPos);
+		/*console.log(leftPos+"and"+topPos);
 
 		window.moveTo(0,0);			//容易被浏览器禁用
-		alert(leftPos+"and"+topPos);
+		console.log(leftPos+"and"+topPos);
 
 		window.moveBy(0,100);*/
 
 		var pageWidth = window.innerWidth,
 			pageHeight = window.innerHeight;
-		//alert(pageWidth+"and"+pageHeight);
+		//console.log(pageWidth+"and"+pageHeight);
 
 		var browserWidth = window.outerWidth,
 			browserHeight = window.outerHeight;
-		//alert(browserWidth+"and"+browserHeight);
+		//console.log(browserWidth+"and"+browserHeight);
 
 		//window.resizeTo(100,100);
 		
 		//wroWin.resizeTo(100,100);		禁用了resizeTo
 		//wroWin.close();
 		//window.open("http://www.baidu.com","_blank");
-		//alert(wroWin == null);		//如果没拦截则返回true
+		//console.log(wroWin == null);		//如果没拦截则返回true
 
 		var blocked = false;
 
@@ -61,10 +61,10 @@
 		}
 
 		if(blocked){
-			alert("The popup was blocked");
+			console.log("The popup was blocked");
 		}
 
-		var timeoutId = setTimeout("alert('hello world!')",5000);		//过5秒将当前任务添加到队列中
+		var timeoutId = setTimeout("console.log('hello world!')",5000);		//过5秒将当前任务添加到队列中
 
 		clearTimeout(timeoutId);	//在指定的时间尚未过去之前调用，就可以完全取消超时调用。
 
@@ -77,7 +77,7 @@
 
 			if(num == max){
 				clearInterval(intervalId);
-				alert("Done");
+				console.log("Done");
 			}
 		}
 
@@ -92,18 +92,18 @@
 			if(num < max){
 				setTimeout(arguments.callee,500);
 			}else{
-				alert("Done");
+				console.log("Done");
 			}
 		}
 
 		setTimeout(incrementNumber,500);
 
 		if(confirm("Are you sure?")){
-			alert("I'm so glad you are sure!")
+			console.log("I'm so glad you are sure!")
 		}else{
-			alert("I'm sorry to hear your're not sure!");
+			console.log("I'm sorry to hear your're not sure!");
 		}
-		//alert(window.location.toString());
+		//console.log(window.location.toString());
 	</script>
 </body>
 </html>
