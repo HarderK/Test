@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+	function loadScriptString(code){
+		var script = document.createElement("script");
+		script.type = "text/javascript";
+		try{
+			script.appendChild(document.createTextNode(code));
+		}catch(e){
+			script.text = code;
+		}
+		document.body.appendChild(script);
+	}
+
+	function loadScript(url){
+		var script = document.createElement("scirpt");
+		script.type = "text/javascript";
+		script.src = url;
+		var head = document.getElementsByTagName('head')[0];
+		head.appendChild(script);
+	}
+
+	function loadStyleString(css){
+		var style = document.createElement("style");
+		style.type = "text/css";
+		try{
+			style.appendChild(document.createTextNode(css));
+		}catch(ex){
+			style.cssText = css;
+		}
+		var head = document.getElementsByTagName('head')[0];
+		head.appendChild(style);
+	}
+
+	var table = document.createElement("table");
+	table.border = 1;
+	table.width = "100%";
+
+	//创建tbody
+	var tbody  = document.createElement("tbody");
+	table.appendChild(tbody);
+
+	//创建第一行
+	tbody.insertRow(0);
+	tbody.rows[0].insertCell(0);
+	tbody.rows[0].cells[0].appendChild(document.createTextNode("cell 1,1"));
+	tbody.rows[0].insertCell(1);
+	tbody.rows[0].cells[1].appendChild(document.createTextNode("cell 2,1"));
+
+	//创建第二行
+	tbody.insertRow(1);
+	tbody.rows[1].insertCell(0);
+	tbody.rows[1].cells[0].appendChild(document.createTextNode("Cell 1,2"));
+	tbody.rows[1].insertCell(1);
+	tbody.rows[1].cells[1].appendChild(document.createTextNode("Cell 2,2"));
+
+	document.body.appendChild(table);
+
+
+	</script>
+</body>
+</html>

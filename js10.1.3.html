@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="test">
+	<h1>I have a dream</h1>
+	</div>
+	<div id="test1"><!-- A comment --></div>
+	<script type="text/javascript">
+	var div = document.createElement("div");
+	div.id = "myDiv";
+	div.className = "box";
+	div.innerText = "hi";
+	document.body.appendChild(div);
+
+	/*if(client.browser.ie && client.browser.ie <= 7){
+
+	}*/
+
+/*	for(var i=0, len=div.childNodes.length; i < len; i++){
+		if(div.childNodes[i].nodeType == 1){
+			//执行某些操作
+		}
+	}
+*/
+	div.firstChild.nodeValue = "Hello World!";
+	console.log(div.firstChild.nodeValue);
+
+	console.log(div.firstChild.nodeType);
+	div.firstChild.appendData(" This is a test");
+	div.firstChild.deleteData(1,3);
+	console.log(div.firstChild.length);	//length属性保存着节点中字符的数目。
+
+	var test = document.getElementById("test");
+	console.log(test.firstChild.nodeType);
+	test.firstChild.nodeValue = "some <strong>other</strong>message";
+	console.log(test.firstChild.nodeValue);
+
+	var element = document.createElement("div");
+	element.className = "message";
+
+	var textNode = document.createTextNode("Node Test");
+	element.appendChild(textNode);
+
+	var anotherTextNode = document.createTextNode("Test again");
+	element.appendChild(anotherTextNode);
+
+	document.body.appendChild(element);
+	console.log(element.childNodes.length);
+
+	element.normalize();		//规范化文本节点删除空文本节点，合并多个文本节点
+	console.log(element.childNodes.length);
+
+	element.firstChild.splitText(5);
+	console.log(element.firstChild.nodeValue);
+	console.log(element.childNodes[1].nodeValue);
+
+	var div2 = document.getElementById("test1");
+	console.log(div2.firstChild.nodeType);
+	div2.firstChild.appendData("HAHA");
+	console.log(div2.firstChild.nodeValue);
+	console.log(document.doctype.nodeName);
+	console.log(document.doctype.name);
+
+	var ul = document.createElement("ul");
+	ul.id="myList";
+	document.body.appendChild(ul);
+
+	var fragment = document.createDocumentFragment();
+	var li = null;
+
+	for(var i=0; i<3; i++){
+		li = document.createElement("li");
+		li.appendChild(document.createTextNode("Item"+(i+1)));
+		fragment.appendChild(li);
+	}
+
+	ul.appendChild(fragment);
+
+	ul.setAttribute("class","test");
+	console.log(ul.getAttribute("class"));
+
+	var attr = document.createAttribute("align");
+	attr.value = "left";
+	ul.setAttributeNode(attr);
+	console.log(ul.attributes["align"].value);
+	console.log(ul.getAttributeNode("align").value);
+	console.log(ul.getAttribute("align"));
+	</script>
+</body>
+</html>
