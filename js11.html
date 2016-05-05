@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+</head>
+<body>
+	<div class="selected user" id="myDiv"><img src="" alt="" class="button"></div>	
+	<div class="test1" name="test1">div1</div>
+	<div class="test2">div2</div>
+	<div class="test3">div3</div>
+	<div class="test4">div4</div>
+	<script>
+	var myDiv = document.querySelector("#myDiv");
+	console.log(myDiv.className);
+
+	var img = document.body.querySelector("img.button");
+	console.log(typeof img);
+
+	var divs = document.querySelectorAll("div");
+	console.log(divs);
+	console.log(divs.item(1));
+	//console.log(divs.namedItem("test1"));	//报错，返回的是NodeList对象的实例
+	for(var i=0, len = divs.length; i<len; i++){
+		console.log(divs.item(i));
+		console.log(divs[i]);
+	}
+	console.group("分组");
+	var body = document.body,
+		child = body.firstElementChild;
+	while(child != body.lastElementChild){
+		console.log(child.className);
+		child = child.nextElementSibling;
+	}
+	console.groupEnd();
+
+	var div1 = document.body.getElementsByClassName("test1");
+	console.log(div1.length);
+
+	var div = document.getElementById("myDiv");
+	var classNames = div.className.split(/\s+/);
+	var pos = -1,
+		i,
+		len;
+	for(i=0, len=classNames.length; i<len; i++){
+		if(classNames[i] == "user"){
+			pos = i;
+			break;
+		}
+	}
+	classNames.splice(i,1);
+	myDiv.className = classNames.join(" ");
+
+	myDiv.classList.toggle("user");
+	myDiv.focus();
+	console.log(document.activeElement);
+	//<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	console.log(document.documentMode);
+	console.log(document.body.children[5]);
+	console.log(document.body.contains(div));		//contains()方法
+	console.log(document.body.compareDocumentPosition(div) & 16);
+	console.log(div1[0].compareDocumentPosition(div) & 16);
+
+	function contains(refNode, otherNode){
+		if(typeof refNode.contains == "function" && (!client.engine.webkit || client.engine.webkit >= 522)){
+			return refNode.contains(otherNode);
+		}else if(typeof refNode.compareDocumentPosition == "function"){
+			return !!(refNode.compareDocumentPosition(otherNode) & 16);
+		}else {
+			var node = otherNode.parentNode;
+
+			do{
+				if(node === refNode){
+					return true;
+				}else {
+					node = node.parentNode;
+				}
+			}while (node !== null);
+			return false;
+		}
+	}
+	</script>
+
+</body>
+</html>
