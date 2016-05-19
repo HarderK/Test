@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="" method="post">
+		<input type="text" name="username" value="">
+		<input type="button" value="Echo Username" onclick="alert(username.value)">
+	</form>
+	<button id="myBtn">Button</button>
+	<button id="myBtn1">Button1</button>
+
+	<script type="text/javascript">
+		var btn = document.getElementById("myBtn");
+		btn.onclick = function(){
+			console.log(this);
+			console.log(this.nodeType);
+		};
+		var btn1 = document.getElementById("myBtn1");
+		/**/var handler = function(){
+			alert(this.id);
+		};
+		btn1.addEventListener("click",handler,false);
+		btn1.addEventListener("click",function(){alert("this is a test");},false);
+		function handler(){
+			alert(this.id);
+		}
+		//btn1.removeEventListener("click",handler,false);
+	</script>
+</body>
+</html>
