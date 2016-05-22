@@ -204,6 +204,35 @@
 		var textBox = document.getElementsByTagName('input')[0];
 		textBox.addEventListener("textInput",function(event){},false);
 
+		console.log(document.implementation.hasFeature("CompositionEvent","3.0"));
+
+		console.log("test");
+
+		textBox.addEventListener("compositionstart",function(event){
+			console.log(event.data);
+		},false);
+
+		textBox.addEventListener("compositionupdate",function(event){
+			console.log(event.data);
+		},false);
+
+		textBox.addEventListener("compositionend",function(event){
+			console.log(event.data);
+		},false);
+
+		window.onload = function(){
+			document.addEventListener("contextmenu",function(event){
+				event.preventDefault();
+				console.log(event.clientX+"and"+event.clientY);
+			},false);
+
+
+		};
+
+		window.addEventListener("beforeunload",function(event){
+			var message = "I'm really going to miss you if you go";
+			event.returnValue = message;
+		},false);
 	</script>
 </body>
 </html>
