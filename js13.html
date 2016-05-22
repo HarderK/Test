@@ -11,23 +11,134 @@
 	</form>
 	<button id="myBtn">Button</button>
 	<button id="myBtn1">Button1</button>
+	<button>Button2</button>
+	<button id="btn2">btn2</button>
+	<a href="http://www.baidu.com">链接</a>
+	<a href="http://www.baidu.com">链接1</a>
+
+	<img src="test.png" alt="test">
 
 	<script type="text/javascript">
 		var btn = document.getElementById("myBtn");
-		btn.onclick = function(){
+		btn.onclick = function(event){
 			console.log(this);
 			console.log(this.nodeType);
+			console.log(event.type);
+			console.log(event.currentTarget);
+			console.log(event.eventPhase);
+			console.log(event.bubbles);		//事件是否冒泡
 		};
 		var btn1 = document.getElementById("myBtn1");
-		/**/var handler = function(){
-			alert(this.id);
-		};
+		/*var handler = function(){
+			console.log(this.id);
+		};*/
 		btn1.addEventListener("click",handler,false);
 		btn1.addEventListener("click",function(){alert("this is a test");},false);
 		function handler(){
-			alert(this.id);
+			console.log(this.id);
 		}
 		//btn1.removeEventListener("click",handler,false);
+		
+		document.body.onclick = function(event){
+			console.log(event.currentTarget);
+			console.log(this.tagName);
+			console.log(event.target);
+			console.log(event.eventPhase);
+		}
+
+		var EventUtil = {
+			addHandler : function(element,type,handler){
+				if(element.addEventListener){
+					element.addEventListener(type,handler,false);
+				} else if(element.attachEvent){
+					element.attachEvent("on"+type,handler);
+				} else {
+					element["on"+type] = handler;
+				}
+			},
+			removeHandler : function(element,type,handler){
+				if(element.removeEventListener){
+					element.removeEventListener(type,handler,false);
+				} else if (element.detachEvent){
+					element.detachEvent("on"+type,handler);
+				} else {
+					element["on"+type] = null;
+				}
+			},
+			getEvent : function(event){
+				return event ? event : window.event;
+			},
+			getTarget : function(event){
+				return event.target || event.srcElement;
+			},
+			preventDefault : function(event){
+				if(event.preventDefault){
+					event.preventDefault();
+				} else{
+					event.returnValue = false;
+				}
+			}
+		}
+
+		handler = function(event){
+			switch(event.type){
+				case "click":
+					alert("Clicked");
+					break;
+				case "mouseover":
+					event.target.style.backgroundColor = "red";
+					break;
+				case "mouseout":
+					event.target.style.backgroundColor = "";
+					break;
+			}
+		}
+		var btn2 = document.getElementById("btn2");
+		btn2.onclick = handler;
+		btn2.onmouseover = handler;
+		btn2.onmouseout = handler;
+
+		var link = document.getElementsByTagName('a').item(0);
+		link.onclick = function(event){
+			event.preventDefault();	//阻止了默认事件，会进行冒泡
+			event.stopPropagation();
+		}
+
+		var isSupported = document.implementation.hasFeature("HTMLEvents","2.0");
+		console.log(isSupported);
+
+		window.addEventListener("load",function(){alert("loaded");},false);
+		var image = document.getElementsByTagName("img").item(0);
+
+		image.addEventListener("load",function(event){alert(event.target);},false);
+
+		EventUtil.addHandler(window,"load",function(){
+			var script = document.createElement("script");
+			EventUtil.addHandler(script,"load",function(event){
+				console.log("script loaded");
+			});
+			//script.src="js7.js";
+			document.body.appendChild(script);
+		});
+
+		EventUtil.addHandler(window,"unload",function(event){
+			console.log("unloaded");
+		});
+
+		EventUtil.addHandler(window,"resize",function(event){
+			console.log("窗口大小变化");
+		});
+
+		EventUtil.addHandler(window,"scroll",function(event){
+			if(document.compatMode == "CSS1Compat"){
+				console.log(document.documentElement.scrollTop);
+				console.log(event.target);
+			}else {
+				console.log(document.body.scrollTop);
+				console.log(event.target);
+			}
+		})
+		console.log(document.implementation.hasFeature("MouseEvents","2.0"));
 	</script>
 </body>
 </html>

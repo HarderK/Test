@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="myDiv">test</div>
+	<input type="text">
+	<div>test1</div>
+	<div>test2</div>
+	<div>test3</div>
+	<div>test4</div>
+	<div>test5</div>
+	<div>test6</div>
+	<div>test7</div>
+	<div>test8</div>
+	<div>test9</div>
+	<div>test10</div>
+	<div>test11</div>
+	<div>test12</div>
+	<div>test13</div>
+	<div>test14</div>
+	<div>test15</div>
+	<div>test16</div>
+	<div>test17</div>
+	<div>test18</div>
+	<div>test19</div>
+	<div>test20</div>
+	<div>test21</div>
+	<div>test22</div>
+	<div>test23</div>
+	<div>test24</div>
+	<div>test25</div>
+	<div>test26</div>
+	<div>test27</div>
+	<div>test28</div>
+	<div>test29</div>
+	<div>test30</div>
+	<div>test31</div>
+	<div>test32</div>
+	<div>test33</div>
+	<div>test34</div>
+	<div>test35</div>
+	<div>test36</div>
+	<div>test37</div>
+	<div>test38</div>
+	<div>test39</div>
+	<div>test40</div>
+	<div>test41</div>
+	<div>test42</div>
+	<div>test43</div>
+	<div>test44</div>
+	<div>test45</div>
+	<div>test46</div>
+	<div>test47</div>
+	<div>test48</div>
+	<div>test49</div>
+	<div>test50</div>
+	<div>test51</div>
+	<div>test52</div>
+	<div>test53</div>
+	<div>test54</div>
+	<div>test55</div>
+	<div>test56</div>
+	<div>test57</div>
+	<div>test58</div>
+	<div>test59</div>
+	<div>test60</div>
+	<div>test61</div>
+	<div>test62</div>
+	<div>test63</div>
+	<div>test64</div>
+	<div>test65</div>
+	<div>test66</div>
+	<div>test67</div>
+	<div>test68</div>
+	<div>test69</div>
+	<div>test70</div>
+	<div>test71</div>
+	<div>test72</div>
+	<div>test73</div>
+	<div>test74</div>
+	<div>test75</div>
+	<div>test76</div>
+	<div>test77</div>
+	<div>test78</div>
+	<div>test79</div>
+	<div>test80</div>
+	<div>test81</div>
+	<div>test82</div>
+	<div>test83</div>
+	<div>test84</div>
+	<div>test85</div>
+	<div>test86</div>
+	<div>test87</div>
+	<div>test88</div>
+	<div>test89</div>
+	<div>test90</div>
+	<div>test91</div>
+	<div>test92</div>
+	<div>test93</div>
+	<div>test94</div>
+	<div>test95</div>
+	<div>test96</div>
+	<div>test97</div>
+	<div>test98</div>
+	<div>test99</div>
+	<div>test100</div>
+	<script>
+		var div = document.getElementById("myDiv");
+
+		div.addEventListener("click",function(event){
+			console.log("Client coordinates: "+ event.clientX + "," + event.clientY);
+		},false);
+
+		div.addEventListener("click",function(event){
+			var pageX = event.pageX,
+				pageY = event.pageY;
+
+			if(pageX === undefined){
+				pageX = event.clientX + (document.body.scrollleft || document.documentElement.scrollleft);
+			}
+
+			if(pageY === undefined){
+				pageY = event.clientY + (document.body.scrollTop || document.documentElement.scrollTop);
+			}
+
+			console.log("Page coordinates: " + pageX + "," + pageY);
+		},false);
+
+		div.addEventListener("click",function(event){
+			console.log("Screen coordinates: " + event.screenX + "," + event.screenY);
+		},false);
+
+		div.addEventListener("click",function(event){
+			var keys = new Array();
+
+			if(event.shiftKey){
+				keys.push("shift");
+			}
+
+			if(event.ctrlKey){
+				keys.push("ctrl");
+			}
+
+			if(event.altKey){
+				keys.push("alt");
+			}
+
+			if(event.metaKey){
+				keys.push("meta");
+			}
+
+			console.log(keys.join(","));
+		},false);
+
+		var EventUtil = {
+			getRelatedTarget : function(event){
+				if(event.relatedTarget){
+					return event.relatedTarget;
+				}else if(event.toElement) {
+					return event.toElement;
+				}else if(event.fromElement){
+					return event.fromElement;
+				}else {
+					return null;
+				}
+			},
+			getWheelDelta : function(event){
+				if(event.wheelDelta){
+					return (client.engine.opera && client.engine.opera < 9.5 ? -event.wheelDelta : event.wheelDelta);
+				}else {
+					return -event.detail * 40;
+				}
+			},
+			getCharCode : function(event){
+				if(typeof event.charCode == "number"){
+					return event.charCode;
+				} else {
+					return event.keyCode;
+				}
+			}
+		};
+
+		div.addEventListener("mouseout",function(event){
+			console.log("related target:" + event.relatedTarget);
+		},false);
+
+		document.addEventListener("mousewheel",function(event){
+			console.log("滚轮事件:"+ event.wheelDelta);
+		},false);
+
+		(function(){
+			 document.addEventListener("mousewheel",function(event){
+			 	console.log(EventUtil.getWheelDelta(event));
+			 },false);
+
+			 document.addEventListener("DOMMouseScroll",function(event){
+			 	console.log(EventUtil.getWheelDelta(event));
+			 },false);
+		})();
+
+		var textBox = document.getElementsByTagName('input')[0];
+		textBox.addEventListener("textInput",function(event){},false);
+
+	</script>
+</body>
+</html>
