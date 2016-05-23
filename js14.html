@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="" id="form1">
+		<input type="text">
+		<input type="text">
+		<select name="location" id="selLocation">
+			<option value="SunnyVal">SunnyVale</option>
+			<option value="Los Angeles">Los Angeles</option>
+			<option value="Mountain View">Mountain View</option>
+			<option value="">China</option>
+			<option>Australia</option>
+		</select>
+		<ul>
+			<li><input type="radio" name="color" value="red">Red</li>
+			<li><input type="radio" name="color" value="green">Green</li>
+			<li><input type="radio" name="color" value="blue">Blue</li>
+		</ul>
+		<input type="reset" value="Reset Form">
+		<button>test</button>
+		<input type="submit" value="submit form">
+		<button type="submit">submit form</button>
+		<input type="image" src="test.png">
+
+	</form>
+
+	<iframe name="richedit" src="blank.htm" style="height:100px;width:100px;"></iframe>
+	<div class="editable" id="richedit" contenteditable style="height:100px;width:100px;">
+		<h1>this is a test</h1>
+	</div>
+	<script>
+		window.onload = function(event){
+			frames["richedit"].document.designMode = "on";
+		};
+		console.log(document.forms);
+		var form = document.forms[0];
+
+		console.log(form.elements);
+		console.log(form.elements[4].type);
+
+		window.addEventListener("load",function(event){
+			var element = document.forms[0].elements[0];
+
+			if(element.autofocus != true){
+				element.focus();
+				console.log(element.tagName);
+			}
+		},false);
+
+		var element = document.forms[0].elements[0];
+		var element1 = document.forms[0].elements[1];
+		element.addEventListener("focus",function(event){
+			var target = event.target;
+			target.select();
+		},false);
+
+		element1.addEventListener("select",function(event){
+			var target = event.target;
+			console.log(target.value.substring(target.selectionStart,target.selectionEnd));
+		},false);
+
+		var EventUtil = {
+			getCharCode : function(event){
+				if(typeof event.charCode == "number"){
+					return event.charCode;
+				}else {
+					return event.keyCode;
+				}
+			}
+		};
+
+		element1.addEventListener('keypress',function(event){
+			var target = event.target;
+			var charCode = EventUtil.getCharCode(event);
+			if(!/\d/.test(String.fromCharCode(charCode)) && charCode > 9 && !event.ctrlKey){
+				event.preventDefault();
+			}
+		},false);
+
+		function tabForward(event){
+			var target = event.target;
+
+			if(target.value.length == target.maxLength){
+				var form = target.form;
+
+				for(var i=0, len=form.elements.length; i<len; i++){
+					if(form.elements[i] == target){
+						if(form.elements[i+1]){
+							form.elements[i+1].focus();
+						}
+						return;
+					}
+				}
+			}
+		}
+
+		var isRequiredSupported = "required" in document.createElement("input");
+		console.log(isRequiredSupported);
+
+		var input = document.createElement("input");
+		input.type = "email";
+		console.log(input.type == "email");
+
+		var selectBox = document.forms[0].elements["location"];
+
+		selectBox.addEventListener("change",function(event){
+			var text = selectBox.options[0].text;
+			var value = selectBox.options[0].value;
+			console.log(text+" and "+value);
+		},false);
+
+		function getSelectedOptions(selectbox){
+			var result = new Array();
+			var option = null;
+
+			for(var i=0, len=selectbox.options.length; i<len; i++){
+				option = selectionbox.options[i];
+				if(option.selected){
+					result.push(option);
+				}
+			}
+			return result;
+		}
+		
+	</script>
+</body>
+</html>
