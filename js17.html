@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		window.onload = function(){
+			try{
+				//可能会导致错误的代码
+				//
+				throw new Error("Something bad happened.");
+			} catch(error){
+				//发生错误时的处理
+				console.log(error.message);
+			}
+		}
+
+		//利用原型链通过继承Error来创建自定义错误类型。
+		function CustomError(message){
+			this.name = "CustomError";
+			this.message = message;
+		}
+
+		CustomError.prototype = new Error();
+
+		function process(values){
+			if(!(values instanceof Array)){
+				throw new Error("process(): Argument must be an array");
+			}
+
+			values.sort();
+
+			for(var i=0, len=values.length; i<len; i++){
+				if(values[i] > 100){
+					return values[i];
+				}
+			}
+			return -1;
+		}
+	</script>
+</body>
+</html>
