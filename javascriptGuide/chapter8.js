@@ -285,3 +285,4 @@ console.log(gcd(18,96));
 //注意，当我们写一个递归函数时，往往需要实现记忆功能
 //我们更希望调用实现了记忆功能的递归函数，而不是原递归函数
 var factorial = memorize(function(n){ return (n <= 1) ? 1 : n * factorial(n-1); });
+console.log(factorial(5));
