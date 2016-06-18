@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		span.raise {vertical-align: super;}
+		span.lower {vertical-align: sub;}
+		span.bottom {font-size: 2em; vertical-align: bottom;}
+		span.top {font-size: 3em; vertical-align: top;}
+		p.spread {word-spacing: 0.5em;}
+		p.tight {word-spacing: -0.5em;}
+		p.base {word-spacing: normal;}
+		p.norm {word-spacing: 0;}
+		p.spacious {letter-spacing: 0.25em;}
+		p.tight1 {letter-spacing: -0.25em;}
+		p.tes {letter-spacing: 0.25em; font-size: 20px;}
+		small {font-size: 50%;}
+		h1 {text-transform: capitalize;}
+		p.dec {text-decoration: underline; color: black;}
+		strong {color: gray; text-decoration: underline;}
+		p.cl1 {text-shadow: green 5px 0.5em 2px, silver -1em -1em ;}
+		p.pre {white-space: pre-wrap;}
+	</style>
+</head>
+<body>
+	<p>This paragraph contains <span class="raise">superscripted</span> and <span class="lower"> subscripted</span> text.</p>
+	<p>This paragraph contains <span class="bottom">superscripted</span> and <span class="top"> subscripted</span> text.</p>
+	<p class="spread">The spaces between words in this paragraph will be increased by 0.5em</p>
+	<p class="tight">The spaces between words in this paragraph will be decreased by 0.5em</p>
+	<p class="base">The spaces between words in this paragraph will be normal</p>
+	<p class="norm">The spaces between words in this paragraph will be normal</p>
+	<p class="spacious">The letters in this paragraph are spread out a bit.</p>
+	<p class="tight1">The letters in this paragraph are a bit smashed together.</p>
+	<p class="tes">This spacious paragraph features <small>tiny text that is just as spacious</small>
+	, even though the author probably wanted the spacing to be in proportion to the size of the text.</p>
+	<h1>The heading-one at the Beginging</h1>
+	<p class="dec">This paragraph, which is black and has a black undelined, also contains <strong>strongly emphasized text</strong> which has the black underline beneath it as well</p>
+	<p class="cl1">Keep your eyes on the shadows</p>\
+	<p class="pre">This spacious paragraph features  tiny text that is just as spacious, even though the author probably wanted the spacing to be in proportion to the size of the text.</p>
+</body>
+</html>
