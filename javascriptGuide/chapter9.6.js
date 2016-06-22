@@ -113,3 +113,109 @@ console.log(deck);
 
 var hand = deck.deal(13).sort(Card.orderBySuit);
 console.log(hand);
+
+Range.prototype.constructor = Range;
+
+//一个Range对象和其他不是Range的对象均不相等
+//当且仅当两个范围的端点相等，他们才相等
+Range.prototype.equals = function(that){
+	if(that == null) return false;
+
+	if(that.constructor !== Range) return false;
+
+	return this.from == that.from && this.to == that.to;
+}
+
+Set.prototype.equals = function(that){
+	//一些次要情况的快捷处理
+	if(this == that) return true;
+
+	//如果that不是一个集合，它和this不相等
+	//我们用到了instanceof，使得这个方法可以用于Set的任何子类
+	//如果希望采用鸭式辩型的方法，可以降低检查的严格程度
+	//或者可以通过 this.constructor == that.constructor 来加强检查的严格程度
+	//注意null和undefined两个值是无法用于instanceof运算的
+	if(! (that instanceof Set)) return false;
+
+	//如果两个集合的大小不一样，则它们不相等
+	if(this.size() != that.size()) return false;
+
+	//检查两个集合中的元素是否完全一样
+	//如果两个集合不相等，则通过抛出异常来终止foreach循环
+	try {
+		this.foreach(function(v){
+			if( !that.contains(v)) throw false;
+		});
+		return true;
+	} catch(x) {
+		if (x == false) return false;
+		throw x;
+	}
+
+};
+
+/**
+ * 方法借用的泛型实现
+ */
+var generic = {
+	//返回一个字符串，这个字符串包含构造函数的名字（如果构造函数中含有名字）
+	//以及所有非继承来的、非函数属性的名字和值
+	toString : function(){
+		var s = "[";
+		//如果这个对象包含构造函数，且构造函数包含名字
+		//这个名字会作为返回字符串的一部分
+		//需要注意的是，函数的名字属性是非标准的，并不是在所有的环境中都可用
+		if(this.constructor && this.constructor.name);
+			s += this.constructor.name + ":";
+
+		//枚举所有非继承且非函数的属性
+		var n = 0;	//第一个不加逗号
+		for (name in this){
+			if(!this.hasOwnProperty(name)) continue;	//跳过继承来的属性
+			var value = this[name];
+			if(typeof value === "function") continue;
+			if(n++) s += ",";
+			s += name + "=" + value;
+		}
+		return s + "]";
+
+	},
+
+	equals : function(that) {
+		if(that == null) return false;
+		if((this.constructor !== that.constructor)) return false;
+
+		for(var name in this){
+			if(name ===  "|**objectid**|") continue;
+			if(!this.hasOwnProperty(name)) continue;
+			if( this[name] !== that[name]) return false;
+		}
+		return true;
+	}
+}
+
+function Range(from, to ){
+	this.from = function(){ return from;};
+	this.to = function(){return to;};
+}
+
+Range.prototype = {
+	constructor : Range,
+	includes : function(x) {return this.from() <= x && x <= this.to();},
+	foreach : function(f) {
+
+	},
+	toString : function(){}
+};
+
+//使用工厂方法来返回一个使用极坐标初始化的Complex对象
+Complex.polar = function(r, theta){
+	return new Complex(r * Math.cos(theta), r * Math.sin(theta));
+};
+
+//使用工厂方法用来通过数组初始化Set对象：
+Set.fromArray = function(a){
+	s = new Set();
+	s.add.apply(s, a);	//将数组a的成员作为参数传入add()方法
+	return s;
+}；
