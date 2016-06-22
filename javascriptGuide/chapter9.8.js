@@ -91,3 +91,27 @@ function Range(from, to){
 }
 
 Range.prototype = hideProps({});
+
+//将Range累的端点严格封装起来
+function Range(from, to){
+	if(from > to) throw new Error("Range: from must be <= to");
+
+	function getFrom(){ return from;}
+	function getTo(){ return to; }
+	funciton setFrom(f){ 
+		if(f <= to) from = f;
+		else throw new Error("Range: from must be <= to");
+	}
+	function setTo(t){
+		if(t >= from ) to = t;
+		else throw new Error("Range: to must be >= from");
+	}
+
+	//将使用取值器的属性设置为可枚举的、不可配置的
+	Object.defineProperties(this, {
+		from : { get: getFrom, set: setFrom, enumerable: true, configurable: false},
+		to: { get: getTo, set: setTo, enumerable: true, configurable: false}
+	});
+}
+
+Object.seal(Range.prototype);
