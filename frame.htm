@@ -5,5 +5,64 @@
 </head>
 <body>
 	<h1>topFrame</h1>
+	<div id="atr" class="global" style="">test</div>
+	<script>
+		window.onload = function(){
+			var div = document.getElementsByTagName("div").item(0);
+			var attr = div.attributes;
+			console.log(attr);
+			var del = div.attributes.removeNamedItem("style");
+			console.log(attr);
+			console.log(div.attributes.getNamedItem("class").value);
+
+			function outputAttributes(element){
+				var pairs = new Array(), attrName, attrValue, i, len;
+
+				for(i=0, len=element.attributes.length; i < len; i++){
+					attrName = element.attributes[i].nodeName;
+					attrValue = element.attributes[i].value;
+					pairs.push(attrName + "=\"" + attrValue + "\"");
+
+				}
+
+				return pairs.join(" ");
+			}
+
+			console.log(outputAttributes(div));
+
+			var div = document.createElement("div");
+			div.id = "text";
+			var textNode = document.createTextNode("\<strong\>Hello\<\/strong\> world!");
+			div.appendChild(textNode);
+			document.body.appendChild(div);
+			console.log(textNode.nodeValue);
+
+			function loadStyles(url){
+				var link = document.createElement("link");
+				link.rel = "stylesheet";
+				link.type = "text/css";
+				link.href = url;
+				var head = document.getElementsByTagName("head")[0];
+				head.appendChild(link);
+			}
+
+			function loadStyleString(css){
+				var style = document.createElement("style");
+				style.type = "text/css";
+				try{
+					style.appendChild(document.createTextNode(css));
+				}catch(e){
+					style.styleSheet.cssText = css;
+				}
+				var head = document.getElementsByTagName("head");
+				head.appendChild(style);
+			}
+
+			div.innerHTML = "<b>\"hello world!!!\"</b>";
+
+			var result = document.documentElement.compareDocumentPosition(document.body);
+			console.log(result && 16);
+		}
+	</script>
 </body>
 </html>
