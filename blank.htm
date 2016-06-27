@@ -5,6 +5,18 @@
 	<title>Blank Page for Rech Text Editing</title>
 </head>
 <body>
-	
+	<a href="http://www.baidu.com" id="mylink">go</a>
+	<script>
+		var link = document.getElementById("mylink");
+		link.onclick = function(event){
+			event.preventDefault();
+			alert(event.cancelable);
+			event.stopPropagation();
+		};
+
+		document.body.onclick = function(event){
+			location.href = "http://www.baidu.com";
+		};
+	</script>
 </body>
 </html>
