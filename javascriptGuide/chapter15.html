@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		function getElements(/* ids... */){
+			var elements = {};
+			for(var i = 0; i < arguments.length; i++){
+				var id = arguments[i];
+				var elt = document.getElmentById(id);
+				if (elt == null){
+					throw new Error("No Element with id " + id);
+				}
+				elements[id] = elt;
+			}
+
+			return elements;
+		}
+	</script>
+</body>
+</html>
