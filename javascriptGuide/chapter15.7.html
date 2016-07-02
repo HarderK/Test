@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#TOC {border: solid black 1px; margin: 10px; padding:10px;}
+		.TOCEntry {font-family: sans-serif;}
+		.TOCEntry a {text-decoration: none;}
+		.TOCLevel1 {font-size: 16px; font-weight: bold;}
+		.TOCLevel2 {font-size: 12px; margin-left: .5in;}
+		.TOCSectNum:after {content: ": ";}
+
+	</style>
+</head>
+<body>
+	<h1></h1>
+	<h2></h2>
+	<h3></h3>
+	<h4></h4>
+	<h5></h5>
+	<h6></h6>
+	<script>
+		function onLoad(f){
+			if(onLoad.loaded) window.setTimeout(f, 0);
+			else if (window.addEventListener)  window.addEventListener("load", f, false);
+			else if (window.attachEvent) window.attachEvent("onload", f);
+		}
+		//给onLoad设置一个标志，用来指示文档是否载入完成
+		onLoad.loaded = false;
+
+		//注册一个函数，当文档载入完成时设置这个标志
+		onLoad(function(){onLoad.loaded = true;});
+
+		onLoad(function(){		//匿名函数定义了一个局部作用域
+			//查找TOC容器元素
+			//如果不存在则在文档开头创建一个
+			var toc = document.getElementById("TOC");
+			if(!toc){
+				toc = document.createElement("div");
+				toc.id = "TOC";
+				document.body.insertBefore(toc, document.body.firstChild);
+			}
+
+			//查找所有标题元素
+			var headings;
+			if(document.querySelectorAll)
+				headings = document.querySelectorAll("h1,h2,h3,h4,h5,h6");
+			else
+				headings = findHeadings(document.body,[]);
+
+			//遍历查找标题元素
+			function findHeadings(root, sects){
+				for (var c = root.firstChild; c != null; c = c.nextSibling){
+					if(c.nodeType !== 1) continue;
+					if(c.tagName.length == 2 && c.tagName.charAt(0).toUpperCase() == "H")
+						sects.push(c);
+					else
+						findHeadings(c,sects);
+				}
+				return sects;
+			}
+
+			//初始化一个数组来保持跟踪章节号
+			var sectionNumbers = [0,0,0,0,0,0];
+
+			//循环已找到的标题元素
+			for (var h = 0; h < headings.length; h++){
+				var heading = headings[h];
+
+				//跳过在TOC容器中的标题元素
+				if(heading.parendNode == toc) continue;
+
+				//判定标题的级别
+				var level = parseInt(heading.tagName.charAt(1));
+				if(isNaN(level) || level < 1 || level > 6) continue;
+
+				//对于该级别标题，增加对应的数字
+				sectionNumbers[level - 1]++;
+
+				//重置所有标题比它级别低的数字为零
+				for (var i = level; i < 6; i++) sectionNumbers[i] = 0;
+
+				//将所有标题级别的章节号组合产生一个章节号
+				var sectionNumber = sectionNumbers.slice(0, level).join(".");
+
+				//为标题级别增加章节号
+				//把数字放在span中，使得其可以用样式修饰
+				var span = document.createElement("span");
+				span.className = "TOCSecNum";
+				span.innerHTML = sectionNumber;
+				heading.insertBefore(span, heading.firstChild);
+
+				//用命名的锚点将标题包起来，以便为它增加链接
+				var anchor = document.createElement("a");
+				anchor.name = "TOC" + sectionNumber;
+				heading.parentNode.insertBefore(anchor, heading);
+				anchor.appendChild(heading);
+
+				//现在为该节点创建一个链接
+				var link = document.createElement("a");
+				link.href = "#TOC" + sectionNumber;
+				link.innerHTML = heading.innerHTML;
+
+				//将链接放在一个div中，div用基于级别名字的样式修饰
+				var entry = document.createElement("div");
+				entry.className = "TOCEntry TOCLevel" + level;
+				entry.appendChild(link);
+
+				//将div元素添加到TOC容器中
+				toc.appendChild(entry);
+			}
+
+		});
+	</script>
+</body>
+</html>

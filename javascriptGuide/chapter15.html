@@ -5,7 +5,20 @@
 	<title>Document</title>
 </head>
 <body>
+	<div id="test">
+		This is a test
+		<div>
+			hello 
+			<p> world!</p>
+		</div>
+	</div>
 	<script>
+	window.onload = function(){
+		var div = document.getElementById("test");
+		console.log(div.textContent);
+		console.log(div.innerHTML);
+
+	};
 		function getElements(/* ids... */){
 			var elements = {};
 			for(var i = 0; i < arguments.length; i++){
@@ -53,6 +66,168 @@
 			}
 			return e;
 		}
+
+		var sparklines = document.getElementsByClassName("sparklines");
+		for(var i = 0; i < sparklines.length; i++){
+			var dataset = sparklines[i].dataset;
+			var ymin = parseInt(dataset.ymin);
+			var ymax = parseFloat(dataset.ymax);
+			var data = sparklines[i].textContent.split(" ").map(parseFloat);
+		}
+
+		function textContent(element, value){
+			var content = element.textContent;
+
+			if(value === undefined){
+				if(content !== undefined) return content;
+				else return element.innerText;
+			}else{
+				if(content !== undefined) element.textContent = value;
+				else element.innerText = value;
+			}
+		}
+
+		function textContent(e){
+			var child, type, s = "";
+			for(child = e.firstChild; child != null; child = child.nextSibling){
+				type = child.nodeType;
+				if(type === 3 || type === 4) s += child.nodeValue;
+				else if(type === 1)
+					s += textContent(child);
+			}
+			return s;
+		}
+
+		function upcase(n){
+			if(n.nodeType == 3 || n.nodeType == 4)
+				n.data = n.data.toUpperCase();
+			else
+				for(var i = 0; i < n.childNodes.length; i++)
+					upcase(n.childNodes[i]);
+		}
+
+		//将child节点插入到parent中，使其成为第n个子节点
+		function insertAt(parent, child, n){
+			if(n < 0 || n > parent.childNodes.length) throw new Error("Invalid index");
+			else if(n == parent.childNodes.length) parent.appendChild(child);
+			else parent.insertBefore(child, parent.childNodes[n]);
+		}
+
+		function sortrows(table, n, comparator){
+			var tbody = table.tBodies[0];
+			var rows = tbody.getElementsByTagName("tr");
+			rows = Array.prototype.slice.call(rows, 0);
+
+			rows.sort(function(row1, row2){
+				var cell1 = row1.getElementsByTagName("td")[n];
+				var cell2 = row2.getElementsByTagName("td")[n];
+				var val1 = cell1.textContent || cell1.innerText;
+				var val2 = cell2.textContent || cell2.innerText; 
+				if(comparator) return comparator(val1, val2);
+				if(val1 < val2) return -1;
+				else if(val1 > val2) return 1;
+				else return 0;
+
+			});
+
+			for(var i = 0; i < rows.length; i++) tbody.appendChild(row[i]);
+		}
+
+		//用一个新的<b>元素替换n节点，并使n成为该元素的子节点
+		function embolden(n){
+			//加入参数是字符串而不是节点，将其当做元素的id
+			if(typeof n == "string") n = document.getElementById(n);
+			var parent = n.parentNode;
+			var b = document.createElement("b");
+			parent.replaceChild(b, n);
+			b.appendChild(n);
+		}
+
+		(function(){
+			//如果outerHTML存在，则直接返回
+			if(document.createElement("div").outerHTML) return;
+
+			//返回this所引用元素的外部HTML
+			function outerHTMLGetter(){
+				var container = document.createElement("div");
+				container.appendChild(this.cloneNode(true));
+				return container.innerHTML;
+			}
+
+			//用指定的值设定元素的外部HTML
+			function outerHTMLSetter(value){
+				//创建一个虚拟元素，设置其内容为指定的值
+				var container = document.createElement("div");
+				container.innerHTML = value;
+
+				//将虚拟元素的节点全部移动到文档中
+				for(e = container.firstChild; e; e = e.nextSibling){
+					this.parentNode.insertBefore(e, this);
+				}
+				this.parentNode.removeChild(this);
+			}
+
+			if(Object.defineProperty){
+				Object.defineProperty(Element.prototype, "outerHTML",{
+					get: outerHTMLGetter,
+					set: outerHTMLSetter,
+					enuberable: false, configurable: true
+				});
+			}
+			else{
+				Element.prototype.__defineGetter__("outerHTML", outerHTMLGetter);
+				Element.prototype.__defineSetter__("outerHTML", outerHTMLSetter);
+			}
+		}());
+
+		function reverse(n){
+			//创建一个DocumentFragment作为临时容器
+			var f = document.createDocumentFragment();
+
+			while(n.lastChild) f.appendChild(n.lastChild);
+
+			n.appendChild(f);
+		} 
+
+
+		var Insert = (function(){
+			//如果元素有原生的insertAdjacentHTML
+			if(document.createElement("div").insertAdjacentHTML){
+				return{
+					before : function(e,h) {e.insertAdjacentHTML("beforebegin", h);},
+					after : function(e,h) {e.insertAdjacentHTML("afterend", h);},
+					atStart : function(e,h) {e.insertAdjacentHTML("afterbegin", h);},
+					atEnd : function(e,h) {e.insertAdjacentHTML("beforeend", h);}
+				};
+			}
+
+			//首先定义一个工具函数，传入HTML字符串，返回一个DocumentFragment,
+			//它包含了解析后的HTML的表示
+			function fragment(html){
+				var elt = document.createElement("div");
+				var frag = document.createDocumentFragment();
+				elt.innerHTML = html;
+				while(elt.firstChild) 
+					frag.appendChild(elt.firstChild);
+
+				return frag;
+			}
+
+			var Insert = {
+				before: function(elt,html){
+					elt.parentNode.insertBefore(fragment(html), elt);
+				},
+				after: function(elt,html){
+					elt.parentNode.insertBefore(fragment(html), elt.nextSibling);
+				},
+				atStart: function(elt,html){
+					elt.insertBefore(fragment(html), elt.firstChild);
+				},
+				atEnd: function(elt,html){
+					elt.appendChild(fragment(html));
+				}
+			}
+		}());
 	</script>
 </body>
 </html>
