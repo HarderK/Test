@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		//查询窗口滚动条的位置
+		function getScrollOffsets(w){
+			w = w || window;
+
+			//除了IE8 及更早的版本外，其他的浏览器都能用
+			if(w.pageXOffset != null) return{x: w.pageXOffset, y: w.pageYOffset};
+
+			//标准模式下的IE
+			var d = w.document;
+			if(document.compatMode == "CSS1Compat")
+				return {x: d.documentElement.scrollLeft, y: d.documentElement.scrollTop};
+
+			//对怪异模式下的浏览器
+			return {x: d.body.scrollLeft, y: d.body.scrollTop};
+		}
+
+		//查询窗口的视口尺寸
+		function getViewportSize(w){
+			w = w || window;
+
+			//除了IE 8 及更早的版本外，其他浏览器都能用
+			if(w.innerWidth != null) return {w: w.innerWidth, h: w.innerHeight};
+
+			//对标准模式下的IE（或任何浏览器)
+			var d = w.document;
+			if(document.compatMode == "CSS1Compat")
+				return {w: d.documentElement.clientWidth, h: d.documentElement.clientHeight};
+
+			return {w: d.body.documentElement, h: d.body.documentElement};
+		}
+
+		function scrollToBottom(){
+			var documentHeight = document.documentElement.offsetHeight;
+			var viewportHeight = window.innerHeight;
+
+			window.scrollTo(0, documentHeight - viewPortHeight);
+
+		}
+
+		// 计算元素的文档坐标
+		function getElementPosition(e){
+			var x=0, y=0;
+			while(e != null){
+				x += e.offsetLeft;
+				y += e.offsetTop;
+				e = e.offsetParent;
+			}
+			return {x: x, y: y};
+		}
+	</script>
+</body>
+</html>
