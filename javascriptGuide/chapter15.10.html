@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<a href="javascript: var q = getSelectedText(); void window.open('http://www.baidu.com/?' + q);">Look Up Selected Text In Baidu</a>
+	<div contenteditable spellcheck>click to edit</div>
+	<script>
+		function ElementStream(elt){
+			if(typeof elt === "string") elt = document.getElementById(elt);
+			this.elt = elt;
+			this.buffer = "";
+		}
+
+		ElementStream.prototype.write = function(){
+			this.buffer += Array.prototype.join.call(arguments,"");
+		};
+
+		ElementStream.prototype.writeln = function(){
+			this.buffer += Array.prototype.join.call(arguments, "") + "\n";
+		};
+
+		ElementStream.prototype.close = function(){
+			this.elt.innerHTML = this.buffer;
+			this.buffer = "";
+		};
+
+		//查询选取的文本
+		function getSelectedText(){
+			if(window.getSelection)		//HTML5标准API
+				return window.getSelection().toString();
+			else if(document.selection)		//IE特有的技术
+				return document.selection.createRange().text;
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form name="shipping" action="handle.php" >
+		<fieldset>
+			<legend>Shipping Method</legend>
+			<label for=""><input type="radio" name="method" value="1st">First-class</label>
+			<label for=""><input type="radio" name="method" value="2day">2-day Air</label>
+			<label for=""><input type="radio" name="method" value="overnite">Overnight</label>
+		</fieldset>
+	</form>
+	<form action="" onreset="return confirm('Really erase all input and start over?')">
+		<label for=""><input type="radio" name="method" value="1st">First-class</label>
+		<label for=""><input type="radio" name="method" value="2day">2-day Air</label>
+		<label for=""><input type="radio" name="method" value="overnite">Overnight</label>
+		<button type="reset">rest</button>
+	</form>
+
+	<script>
+		window.onload = function(){
+		var methods = document.forms.shipping.elements["method"];
+		console.log(methods);
+		console.log(document.forms.shipping.action);
+		}
+	</script>
+</body>
+</html>

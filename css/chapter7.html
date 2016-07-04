@@ -4,7 +4,21 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<style>
-	
+		p.neg{
+			margin-top: -50px;
+			margin-right: 10px;
+			margin-left: 10px;
+			margin-bottom: 0;
+			border: 3px solid gray;
+		}
+		ul {
+			list-style-position: inside;
+		}
+		div#navigation a{display:block;}
+		#rollcall li{display:inline; border-right: 1px solid; padding: 0 0.33em;}
+		#rollcall li:first-child{border-left: 1px solid;}
+		#navbar {width:400px;}
+		#navbar a{display:inline-block; width:19%;}
 	</style>
 </head>
 <body>
@@ -13,6 +27,40 @@
 	</div>
 	<div style="height: auto; border-top:1px solid; padding-bottom: 1em;">
 		<p style="margin-top: 2em; margin-bottom: 2em;">Another paragraph!</p>
+	</div>
+	<div style="width:420px; background-color:silver; padding: 10px; margin-top: 50px; border: 1px solid;">
+		<p class="neg">A paragraph.</p>A div.
+	</div>
+	<li style="margin-bottom: 20px">A list item</li>
+	<h1 style="margin-top: -18px">A Heading-1</h1>
+	<ul>
+		<li>A list</li>
+		<li>Another list</li>
+		<li>A third list</li>
+	</ul>
+	<p style="font-size: 12px; line-height: 12px;"> This is a text, <em>some of which is emphasized</em>, plus other text<br> which is <strong style="font-size:24px; vertical-align: 4px;">strongly emphasized</strong> and which is<br> larger than the surrounding text.
+	</p>
+	<p style="font-size: 12px; line-height: 12px;"> This is a text, <em>some of which is emphasized</em>, plus other text<br> which is <strong style="font-size:24px;">strong</strong> and <span style="vertical-align: top;">tall</span> and that is<br> larger than the surrounding text.
+	</p>
+	<div id="navigation">
+		<a href="">test1</a>
+		<a href="">test2</a>
+		<a href="">test3</a>
+		<a href="">test4</a>
+	</div>
+	<ul id="rollcall">
+		<li>test1</li>
+		<li>test2</li>
+		<li>test3</li>
+		<li>test4</li>
+		<li>test5</li>
+	</ul>
+	<div id="navbar">
+		<a href="">test1</a>
+		<a href="">test2</a>
+		<a href="">test3</a>
+		<a href="">test4</a>
+		<a href="">test5</a>
 	</div>
 </body>
 </html>
