@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="global.css">
+</head>
+<body>
+	<div style="width: 500px; border: 5px solid #9AA2E5;">
+		<div id="sp">test</div>
+	</div>
+	<button style="background-color:#F8A1A1;" >shake and fade</button>
+	<script>
+
+	window.onload = function(){
+		var sp = document.getElementById("sp");
+		shake(sp, null, 5, 500);
+
+		var bt = document.getElementsByTagName("button")[0];
+		bt.onclick = function(){
+			shake(this, fadeOut);
+		};
+
+		var css = document.styleSheets[0].cssRules[0].selectorText;
+		console.log(css);
+	}
+
+		/**
+		 * 将e转化为相对定位的元素，使之左右“震动”
+		 * 第一个参数可以是元素对象或者元素的id
+		 * 如果第二个参数是函数，以e为参数，它将在动画结束时调用
+		 * 第三个参数指定e震动的距离，默认是5px
+		 * 第四个参数指定震动多久，默认是500毫秒
+		 */
+		function shake(e, oncomplete, distance, time){
+			if(typeof e === "string") e = document.getElementById(e);
+			if(!time) time = 500;
+			if(!distance) distance = 5;
+
+			var originalStyle = e.style.cssText;		//保存e的原始style
+
+			e.style.position = "relative";
+			var start = (new Date()).getTime();			//动画的开始时间
+			animate();		//动画开始
+
+			//函数检查消耗的时间，并更新e的位置
+			//如果动画完成，它将e还原为原始状态
+			//否则，它更新e的位置，安排他自身重新运行
+			function animate(){
+				var now = (new Date()).getTime();		//得到当前时间
+				var elapse =  now - start;				//从开始以来消耗了多长时间
+				var fraction = elapse/time;				//总时间的百分比
+
+				if(fraction < 1){
+					//作为动画完成比例的函数，计算e的x位置
+					//使用正弦函数将完成比例乘以4pi
+					//所以，它将回往两次
+					var x = distance * Math.sin(fraction * 4 * Math.PI);
+					e.style.left = x + "px";
+
+					//在25秒后或在总时间的最后尝试再次运行函数
+					//目的是产生每秒40帧的动画
+					setTimeout(animate, Math.min(20, time - elapse));
+				} else {
+					e.style.cssText = originalStyle;
+					if(oncomplete)	oncomplete(e);
+				}
+			}
+
+		}
+
+		/**
+		 * 以毫秒级的时间将e从完全不透明淡出到完全透明
+		 * 如果不指定时间，默认为500毫秒
+		 * 该函数在IE中不能正常工作
+		 * 出来opacity，IE中使用非标准的filter属性
+		 */
+		 function fadeOut(e, oncomplete, time){
+		 	if(typeof e === "string") e = document.getElementById(e);
+		 	if(!time) time = 500;
+
+		 	var start = (new Date()).getTime();		//动画开始的时间
+		 	animate();
+
+		 	function animate(){
+		 		var elapsed = (new Date()).getTime() - start;		//消耗的时间
+		 		var fraction = elapsed/time;
+
+		 		if(fraction < 1){			//如果动画为完成
+		 			var opacity = 1 - Math.sqrt(fraction);		//计算元素的不透明度
+		 			e.style.opacity = String(opacity);
+		 			setTimeout(animate, Math.min(25, time - elapsed));
+		 		} else {
+		 			e.style.opacity = "0";		//使e完全透明
+		 			if(oncomplete) oncomplete(e);
+		 		}
+		 	}
+		 }
+
+		 function scaleColor(e, factor){
+		 	var color = window.getComputedStyle(e, "").backgroundColor;
+		 	var components = color.match(/[\d\.]+/g);
+		 	for(var i = 0; i < 3; i++){
+		 		var x = Number(components[i]) * factor;
+		 		x = Math.round(Math.min(Math.max(0, x), 255));
+		 		components[i] = x;
+		 	} 
+		 	if(components.length == 3)
+		 		e.style.backgroundColor = "rgb(" + components.join() + ")";
+		 	else 
+		 		e.style.backgroundColor = "rgba(" + components.join() + ")";
+		 }
+
+		 function classList(e){
+		 	if(e.classList) return e.classList;
+		 	return new CSSClassList(e);
+		 }
+
+		 function CSSClassList(e){ this.e = e; }
+
+		 CSSClassList.prototype.contains = function(c){
+		 	//检查c是否是合法的类名
+		 	if(c.length === 0 || c.indexOf(" ") != -1)
+		 		throw new Error("Invalid class name: '" + c + "'");
+
+		 	// 常规检查
+		 	var classes = this.e.className;
+		 	if(!classes) return false;
+		 	if(e === classes) return true;
+
+		 	//否则，把c自身看做一个单词，利用正则表达式搜索c
+		 	//\b在正则表达式中代表单词的边界
+		 	return classes.search("\\b" + c + "\\b") != -1;
+		 };
+
+		 CSSClassList.prototype.add = function(c){
+		 	if(this.contains(c)) return;
+		 	var classes = this.e.className;
+		 	if(classes && classes[classes.length - 1] != " ")
+		 		c = " " + c;
+		 	this.e.className += c;
+		 };
+
+		 CSSClassList.prototype.romove = function(c){
+		 	if(!this.contains(c)) return;	//不包含c，什么都不做
+		 	var pattern = new RegExp("\\b" + c + "\\b", g);
+		 	this.e.className = this.e.className.replace(pattern, "");
+		 };
+
+		 CSSClassList.prototype.toggle = function(c){
+		 	if(this.contains(c)){
+		 		this.remove(c);
+		 		return false;
+		 	}
+		 	else{
+		 		this.add(c);
+		 		return true;
+		 	}
+		 };
+
+		 CSSClassList.prototype.toString = function(){
+		 	return this.e.className;
+		 };
+		 CSSClassList.prototype.toArray = function(){
+		 	return this.e.className.match(/\b\w+\b/g) || [];
+		 }
+
+		 //对文档添加一个样式表，用指定的样式填充它
+		 //styles参数可能是字符组或对象。如果它是字符串，就把它作为样式表的文本
+		 //如果它是对象，将每个定义样式的规则的每个属性添加到样式表中
+		 //属性名即为选择器，其值为对应的样式
+		 function addStyles(styles){
+		 	//首先创建一个样式表
+		 	var styleElt, styleSheet;
+
+		 	if(document.createStyleSheet){		//如果定义了IE的API，即可使用它
+		 		styleSheet = document.createStyleSheet();
+		 	}
+		 	else{
+		 		var head = document.getElementsByTagName("head")[0];
+		 		styleElt = document.createElement("style");
+		 		head.appendChild(styleElt);
+
+		 		//新的样式表是最后一个
+		 		styleSheet = document.styleSheets[document.styleSheets.length - 1];
+		 	}
+
+		 	//向其插入样式
+		 	if( typeof styles === "string"){
+		 		//参数是样式表文本
+		 		if(styleElt) styleElt.innerHTML = styles;
+		 		else styleSheet.cssText = styles;
+		 	} else{
+		 		// 参数是待插入的单独的规则的对象
+		 		var i = 0;
+		 		for(selector in styles){
+		 			if(styleSheet.insertRule){
+		 				var rule = selector + " {" + styles[selector] + "}";
+		 				styleSheets.insertRule(rule, i++);
+		 			} else {
+		 				styleSheets.addRule(selector, styles[selector], i++);
+		 			}
+		 		}
+		 	}
+		 }
+	</script>
+</body>
+</html>
