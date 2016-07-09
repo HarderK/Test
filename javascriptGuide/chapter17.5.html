@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="Drag.js"></script>
+</head>
+<body>
+	<div style="position:absolute; left: 100px; top: 100px; width: 250px; background-color: white; border: solid black;">
+		<div style="background-color: gray; border-botton: dotted black; padding: 3px; font-family: sans-serif; font-weight: bold;">拖动我</div>
+		<p>This is a test! Testing Testing </p>
+		<p>Test Test</p>
+	</div>
+	<script>
+		window.onload = function(){
+			var div = document.getElementsByTagName("div")[1];
+			div.addEventListener("mousedown", function(event){
+				drag(this.parentNode, event);
+			}, false);
+		}
+	</script>
+</body>
+</html>
