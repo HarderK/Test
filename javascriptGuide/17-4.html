@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="whenReady.js"></script>
+	<style>
+		#clock {
+			font: bold 24pt san; 
+			background: #ddf;
+			padding: 10px;
+			border: solid black 2px;
+			border-radius: 10px;
+		}
+	</style>
+</head>
+<body>
+	<h1>从时钟中拖出时间戳</h1>
+	<span id="clock"></span>
+	<textarea  cols="60" rows="20"></textarea>
+	<script>
+		whenReady(function(){
+			var clock = document.getElementById("clock");
+			var icon = new Image();		// 用于拖动的图片
+			icon.src = "clock.png";
+
+			//每分钟显示一次事件
+			function displayTime(){
+				var now = new Date();	// 获取当前时间
+				var hrs = now.getHours(), mins = now.getMinutes();
+				if(mins < 10) min = "0" + mins;
+				clock.innerHTML = hrs + ":" + mins;		// 显示当前时间
+				setTimeout(displayTime, 60000);
+			}
+			displayTime();
+
+			//使时钟能够拖动
+			//我们也能通过HTML属性实现这个目的： <span draggable = "true"></span>
+			clock.draggable = true;
+
+			//设置拖动事件处理程序
+			clock.ondragstart = function(event){
+				var event = event || window.event;
+
+				// dataTransfer属性是拖放API的关键
+				var dt = event.dataTransfer;
+
+				//告诉浏览器正在拖动的是什么
+				//把Date()构造函数用作一个返回时间戳字符串的函数
+				dt.setData("Text", Date() + "\n");
+
+				//在支持的浏览器中，告诉它拖动图标来表示时间戳
+				if(dt.setDragImage) dt.setDragImage(icon, 0, 0);
+			}
+
+		});
+	</script>
+</body>
+</html>

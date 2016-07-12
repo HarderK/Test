@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="whenReady.js"></script>
+
+	<style>
+		.dnddroppable{
+			border: 2px solid black;
+		}
+	</style>
+
+</head>
+<body>
+	<ul class="dnd">
+		<li>test01</li>
+		<li>test02</li>
+		<li>test03</li>
+		<li>test04</li>
+		<li>test05</li>
+	</ul>
+	<ul class="dnd">
+		<li>test11</li>
+		<li>test12</li>
+		<li>test13</li>
+		<li>test14</li>
+		<li>test15</li>
+	</ul>
+	<ul>
+		<li>test21</li>
+		<li>test22</li>
+		<li>test23</li>
+		<li>test24</li>
+		<li>test25</li>
+	</ul>
+	<script>
+		whenReady(function(){
+			//查找所有的 ul class="dnd" 元素，并对其调用dnd()函数
+			var lists = document.getElementsByTagName("ul");
+			var regexp = /\bdnd\b/;
+			for(var i = 0; i < lists.length; i++){
+				if(regexp.test(lists[i].className)) dnd(lists[i]);
+			}
+
+			//为列表元素添加拖放事件处理程序
+			function dnd(list){
+				var original_class = list.className;		// 保存原始CSS类
+				var entered = 0; 		// 跟踪进入和离开
+
+				//当拖放元素首次进入列表是调用这个处理程序
+				//它会检查拖放对象包含的数据格式它是否能处理
+				//如果能，它返回false来表示有兴趣放置
+				//在这种情况下，他会高亮拖放目标，让用户知道该兴趣
+				list.ondragenter = function(e){
+					e = e || window.event; 
+					var from = e.relatedTarget;	
+
+					//dragenter和dragleave事件冒泡
+					//它使得在像ul元素有li子元素的情况下，
+					//何时高亮显示或取消高亮显示元素变得棘手
+					//在定义relatedTarget的浏览器中，我们能够跟踪它
+					//否则，我们需要通过统计进入和离开的次数
+					//
+					//如果从列表外面进入或第一次进入
+					//那么需要做一些处理
+					entered++;
+					if(from && !ischild(from, list) || entered == 1){
+						//所有的DnD信息都在dataTransfer对象上
+						var dt = e.dataTransfer;
+
+						//dt.types对象列出了可用的拖放数据类型或格式
+						//HTML5定义这个对象有contains()方法
+						//在一些浏览器中，它是一个有indexOf()方法的数组
+						//在IE8以及之前版本中，它根本不存在
+						var types = dt.types;		// 可用数据格式是什么
+
+						//如果没有任何类型的数据或可用数据是纯文本格式，
+						//那么高亮显示列表让用户知道我们正在监听拖放，
+						//同时返回false让浏览器知晓
+						if(!types || (types.contains && types.contains('text/plain')) ||
+							(types.indexOf && types.indexOf("text/plain") != -1)){
+							list.className = original_class + "droppable";
+							return false;
+						}
+						//如果我们无法识别数据类型，我们 不希望拖放
+						return;
+					}
+					return false;	//  如果不是第一次进入，我们继续保持兴趣
+				};
+
+				//当鼠标指正悬停在列表上时，会调用这个处理程序
+				//我们必须定义这个处理程序并返回false，否则这个拖放操作将取消
+				list.ondragover = function(e){return false;};
+
+				//当拖放对象移除列表或从其子元素中移除时，会调用这个处理程序
+				//如果我们真正正在离开这个列表，不是仅仅从一个列表项到另一个
+				//那么取消高亮显示它
+				list.ondragleave = function(e){
+					e = e || window.event;
+					var to = e.relatedTarget;
+
+					// 如果我们要到列表以外的元素或打破离开和进入次数的平衡
+					// 那么取消高亮显示 它
+					entered--;
+					if((to && !ischild(to, list)) || entered <= 0){
+						list.className = original_class;
+						entered = 0; 
+					}
+					return false;
+				};
+
+				// 当实际放置时会调用这个程序
+				// 我们会接受放下的文本并将其放到一个新的<li>元素中
+				list.ondrop = function(e){
+					e = e || window.event;
+					var dt = e.dataTransfer;
+					var text = dt.getData("Text");
+
+					//如果得到一些文本，把他放入列表尾部的新项中
+					if(text){
+						var item = document.createElement("li");
+						item.draggable = true;
+						item.appendChild(document.createTextNode(text));
+						list.appendChild(item);
+
+						list.className = original_class;
+						entered = 0;
+						return false;
+					}
+				};
+
+				var items = list.getElementsByTagName("li");
+				for(var i = 0; i < items.length; i++)
+					items[i].draggable = true;
+
+				//为拖动列表项注册事件处理程序
+				//注意让我们把处理程序放到列表上
+				//让事件从列表项向上冒泡
+				list.ondragstart = function(e){
+					e = e || window.event;
+					var target = e.target || e.srcElement;
+
+					//如果它不是从li向上冒泡，那么忽略它
+					if(target.tagName !== "LI") return false;
+
+					var dt = e.dataTransfer;
+					dt.setData("Text", target.innerText || target.textContent);
+					dt.effectAllowed = "copyMove";
+				};
+
+				//当成功的放置后，将调用这个处理程序
+				list.ondragend = function(e){
+					e = e || window.event;
+					var target = e.target || e.srcElement;
+
+					//如果这个拖放操作是move，那么要删除列表项
+					if(e.dataTransfer.dropEffect === "move")
+						target.parentNode.removeChild(target);
+				};
+
+				//这是在ondragenter和ondragleave使用的工具函数
+				//如果a是b的子元素则返回true
+				function ischild(a, b){
+					for (; a; a = a.parentNode) if(a === b) return true;
+					return false;
+				}
+			}
+		});
+	</script>
+</body>
+</html>
