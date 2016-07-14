@@ -76,6 +76,11 @@
 			request.onreadystatechange = function(){
 				if(request.readyState === 4 && callback){
 					callback(request);
+					request.onprogress = function(e){
+						e = e || window.event;
+						if(e.lengthComputable)
+							progress.innerHTML = Math.round(100 * e.loaded / e.total) + "% Complete";
+					};
 				}
 
 			};
