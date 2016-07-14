@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		function getText(url, callback){
+			var request = new XMLHttpRequest();
+			request.open("GET", url);
+
+			request.onreadystatechange = function(){
+				//如果请求完成，则它是成功的
+				if(request.readyState === 4 && request.status === 200){
+					var type = request.getResponseHeader("Content-Type");
+					if(type.match(/^test/))
+						callback(request.responseText);
+				}
+			};
+			request.send(null);
+		}
+
+
+		//发起同步的HTTP GET请求以获得指定URL的内容
+		//返回响应文本，或如果请求不成功或响应不是文本就报错
+		function getTextSync(url){
+			var request = new XMLHttpRequest();	
+			request.open("GET", url, false);		// 传递false是实现同步
+			request.overrideMimeType("text/plain; charset=uft-8");
+			request.send(null);
+
+			// 如果不是 200 OK就报错
+			if(request.status !== 200) throw new Error(request.statusText);
+
+			//如果类型错误就报错
+			var type = request.getResponseHeader("Content-Type");
+			if(!type.match(/^text/))
+				throw new Error("Expected textual response;");
+
+			return request.responseText;
+		}
+
+		function get(url, callback){
+			var request = new XMLHttpRequest();
+			request.open("GET", url);
+			request.onreadystatechange = function(){
+				if(request.readyState === 4 && request.status === 200){
+					var type = request.getResponseHeader("Content-Type");
+
+					if(type.indexOf("xml") !== -1 && request.responseXML)
+						callback(request.responseXML);
+					else if(type === "application/json")
+						callback(JSON.parse(request.responseXML));
+					else
+						callback(responseText);
+				} 
+			};
+
+			request.send(null);
+		}
+	</script>			
+</body>
+</html>

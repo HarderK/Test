@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		function encodeFormData(data){
+			if( !data ) return "";
+
+			var pairs = [];
+
+			for(var name in data){
+				if(!data.hasOwnproperty(name)) continue;	// 跳过继承属性
+				if(typeof data[name] === "function") continue;		// 跳过方法
+				var value = data[name].toString();		// 将值转换为字符串
+				name = encodeURIComponent(name.replace("%20", "+"));
+				value = encodeURIComponent(value.replace("%20", "+"));
+				pairs.push(name + "=" + value);
+
+			}
+			return pairs.join("&");
+		}
+
+		function postData(url, data, callback){
+			var request = new XMLHttpRequest();
+			request.open("POST", url);
+			request.onreadystatechange = function(){
+				if(request.readyState === 4 && callback)
+					callback(request);
+			};
+			request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			request.send(encodeFormData(data));
+		}
+
+		function postJSON(url, data, callback){
+			var request = new XMLHttpRequest();
+			request.open("POST", url);
+			request.onreadystatechange = function(){
+				if(request.readyState === 4 && callback)
+					callback(request);
+			};
+			request.setRequestHeader("Content-Type", "application/json");
+			request.send(JSON.stringify(data));
+		}
+
+		function postQuery(url, what, where, radius, callback){
+			var request = new XMLHttpRequest();
+			request.open("POST", url);
+			request.onreadystatechange = function(){
+				if(request.readyState === 4 && callback )
+					callback(request);
+			};
+
+			//Create an XML document with root element <query>
+			var doc = document.implementation.createDocument("", "query", null);
+			var query = doc.documentElement;
+			var find = doc.createElement("find");
+			query.appendChild(find);
+			find.setAttribute("zipcode", where);
+			find.setAttribute("radius", radius);
+			find.appendChild(doc.createTextNode(what));
+
+			request.send(doc);
+
+
+		}
+
+		function postFormData(url, data, callback){
+			if(typeof FormData === "undefined")
+				throw new Error("FormData is not implemented");
+
+			var request = new XMLHttpRequest();
+			request.open("POST", url);
+			request.onreadystatechange = function(){
+				if(request.readyState === 4 && callback){
+					callback(request);
+				}
+
+			};
+			var formdata = new FormData();
+			for(var name in data){
+				if(!data.hasOwnProperty(name)) continue;
+				var value = data[name];
+				if(typeof value === "function") continue;
+
+				formdata.append(name, value);
+			}
+
+			request.send(formdata);
+		}
+	</script>
+</body>
+</html>
