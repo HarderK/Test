@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="whenReady.js"></script>
+</head>
+<body>
+	<script>
+		whenReady(function(){
+			//是否有机会使用跨域请求
+			var supportsCORS = (new XMLHttpRequest()).withCredentials !== undefined;
+
+			//遍历文档中的所有链接
+			var links = document.getElementsByTagName("a");
+			for(var i = 0; i < links.length; i++){
+				var link = links[i];
+				if(!link.href) continue;		// 跳过没有超链接的锚点
+				if(link.title) continue;		// 跳过已经有工具提示的链接
+
+				//如果这是一个跨域请求
+				if(link.host !== location.host || link.protocol !== location.protocol){
+					link.title = "站外链接";
+					if(!supportsCORS) continue;
+				}
+
+				//注册时间处理程序，当鼠标悬停时下载链接详细信息
+				if(link.addEventListener){
+					link.addEventListener("mouseover", mouseoverHandler, false);
+				}else{
+					link.attachEvent("onmouseover", mouseoverHandler);
+				}
+			}
+
+			function mouseoverHandler(e){
+				var link = e.target || e.srcElement;
+				var url = link.href;
+
+				var req = new XMLHttpRequest();
+				req.open("HEAD", url);		// 仅仅询问头信息
+				req.onreadystatechange = function(){
+					if(req.readyState !== 4) continue;		// 忽略未完成的请求
+					if(req.status === 200){
+						var type = req.getResponseHeader("Content-type");
+						var size = req.getResponseHeader("Content-length");
+						var date = req.getResponseHeader("Last-Modefied");
+
+						link.title = "类型：" + type + "n" + "大小：" + size + "n" + "时间：" + date;
+					} else {
+						//如果请求失败，且链接没有站外链接的工具提示
+						//那么显示这个错误
+						if(!link.title)
+							link.title = "Couldn't fetch details";
+					}
+				};
+
+				req.send(null);
+
+				//移除处理程序：仅项一次获取这些头信息
+				if(link.removeEventListener)
+					link.removeEventListener("mouseover", mouseoverHandler, false);
+				else
+					link.detach("onmouseover", mouseoverHandler);
+			}
+		});
+
+		/**
+		 * 使用script元素发送JSONP请求
+		 * 根据指定的URL发送一个JSONP请求
+		 * 在URL中添加一个名为jsonp的查询参数，用于指定该请求的回调函数的名称
+		 */
+		function getJSONP(url, callback){
+			//为本次请求创建一个唯一的回调函数名称
+			var cbnum = "cb" + getJSONP.counter++;		// 没次自增计数器
+			var cbname = "getJSONP." + cbnum;		// 作为JSONP函数的属性
+
+			// 将回调函数名称已表单编码的形式添加到URL的查询部分中
+			// 使用jsonp作为参数名，一些支持JSONP的服务可能使用
+			// 其他的参数名，比如callback
+			if(url.indexOf("?") === -1)
+				url += "?jsonp=" + cbname;
+			else
+				url += "&jsonp=" + cbname;
+
+			// 创建script元素用于发送请求
+			var script = document.createElement("script");
+
+			//定义要被脚步执行的回调函数
+			getJSONP[cbnum] = function(response){
+				try {
+					callback(response);		// 处理响应数据
+				}
+				finally{
+					delete getJSONP[cbnum];		// 删除该函数
+					script.parentNode.removeChild(script);
+				}
+			};
+
+			//立即触发HTTP请求
+			script.src = url;
+			document.body.appendChild(script);
+		}
+		getJSONP.counter = 0;	// 用于创建唯一回调函数名称的计数器
+	</script>
+</body>
+</html>

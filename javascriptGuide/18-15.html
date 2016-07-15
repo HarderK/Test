@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		window.onload = function(){
+			var nick = prompt("Enter your nickname");
+			var input = document.getElementById("input");
+			input.focus();
+
+			//通过event事件注册新消息的通知
+			var chat = new EventSource("/chat");
+			chat.onmessage = function(event){
+				var msg = event.data;		// 从事件对象中获得文本数据
+				var node = document.createTextNode(msg);	// 把它放入一个文本节点
+				var div = document.createElement("div");		// 创建一个div
+				div.appendChild(node);
+				document.body.insertBefore(div, input);
+				input.scrollIntoView();		// 保证input元素可见
+			};
+
+			input.onchange = function(){
+				var msg = nick + ": " + input.value;
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", "/chat");
+				xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+				xhr.send(msg);
+				input.value = "";
+			};
+		}
+	</script>
+</body>
+</html>
