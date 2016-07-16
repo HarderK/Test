@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+	<img src="clock.png" alt="">
+	<script>
+		$(function(){
+			$("img").bind({
+				mouseover: function(){ $(this).stop(true).delay(2000).fadeTo(500, 1.0);},
+				mouseout: function(){ $(this).stop(true).fadeTo(3000, 0.5);}
+			});
+		})
+	</script>
+</body>
+</html>

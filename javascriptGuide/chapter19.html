@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+	<h1>hello<span> test </span></h1>
+	<h1>world</h1>
+	<h1>I'm mating</h1>
+	<script>
+		var text = $("h1").text();
+		console.log(text);
+		console.log($("h1").html());
+		$(function(){
+			$("h1").text(function(n, current){
+				return "@@" + (n++) + ":" + current;
+			});
+		})
+
+		function page(n){
+			var w = $(window);		// 将window对象封装为jQuery对象
+			var pagesize = w.height();
+			var current = w.scrollTop();
+			w.scrollTop(current + n * pagesize);
+		}
+		function test(){
+			$("<br/>+message").appendTo("#log");
+			$(document.createTextNode("$")).prependTo('h1');
+			$("<hr/>").insertBefore("hr");
+			$("<br/>").replaceAll("hr");
+			$(document.body).append("<div id='linklist'><h1>List of Links</h1></div>");
+			$("a").clone().appendTo("#linklist");
+			$("#linklist > a").after("<br/>");
+			$("h1").wrap(document.createElement("i"));
+			$("h1")wrapInner("<i/>");
+			$("body>p:first").wrap("<a name='lead'></a>");
+			$("<img/>",{
+				src: image_url,
+				alt:image_description,
+				className: "translucent_image",
+				//如果这些属性中有任何一个与上面列举的事件注册方法同名，该属性会被当做处理程序函数
+				click: function(){ $(this).css("opacity","50%");} 
+			});
+
+			$("a").bind({mouseenter: f, mouseleave: g});		// $("a").hover(f,g);3
+			$(".stopmoving").click(function(){
+				jQuery.fx.off = true;
+			});
+
+			$("img").animate({width: "hide", height: "hide", opacity: "hide"}, {specialEasing: {width: "linear", height: "linear"}});
+
+			$("img").animate({width: ["hide", "linear"], height: ["hide", "linear"], opacity: "hide"});
+		}
+	</script>
+</body>
+</html>
