@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<img src="test.png" alt="clock">
+	<script>
+		// var cacheImg = new Image();
+		// cacheImg.src = "Ace.jpg";
+		var img = document.getElementsByTagName("img")[0];
+		img.addEventListener("mouseover",function(){this.src = "Ace.jpg";}, false);
+		img.addEventListener("mouseout", function(){this.src = "test.png";}, false);
+
+		function f(){
+			//遍历所有图片查找data-rollover属性
+			for(var i = 0; i < document.images.length; i++){
+				var img = document.images[i];
+				var rollover = img.getAttribute("data-rollover");
+				if(!rollover) continue;
+
+				// 确保将翻转的图片缓存起来
+				(new Image()).src = rollover;
+
+				//定义一个属性来标识默认的图片URL
+				img.setAttribute("data-rollout", img.src);
+
+				//注册时间处理程序来创建翻转效果
+				img.onmouseover = function(){
+					this.src = this.getAttribute("data-rollover");
+				};
+
+				img.onmouseout = function(){
+					this.src = this.getAttribute("data-rollout");
+				};
+			}
+		}
+	</script>
+</body>
+</html>
