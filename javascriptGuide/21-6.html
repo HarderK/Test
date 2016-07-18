@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<canvas id="image" width=500 height="500">
+		
+	</canvas>
+	<script type="text/javascript">
+		var canvas = document.getElementById("image");
+		if(canvas.getContext){
+			var c = canvas.getContext("2d");
+			c.font = "bold 60pt sans-serif";
+			c.lineWidth = 2;
+			c.strokeStyle = "#000";
+
+			//勾勒矩形轮廓和文本轮廓
+			c.strokeRect(175, 25, 50, 325);
+			c.strokeText("<canvas>", 15, 330);
+
+			polygon(c,3,200,225,200);
+			polygon(c,3,200,225,100,0,true);
+
+			c.clip();
+
+			c.lineWidth = 10;
+			c.stroke();
+
+			c.fillStyle = "#aaa";
+			c.fillRect(175, 25, 50, 325);
+			c.fillText("<canvas>", 15, 330);
+		}
+
+		function polygon(c,n,x,y,r,angle,counterclockwise){
+			angle = angle || 0;
+			counterclockwise = counterclockwise || false;
+			c.moveTo(x + r*Math.sin(angle), y - r*Math.cos(angle));		// 从第一个顶点开始一条新的路径
+			var delta = 2 *  Math.PI / n;		//两个顶点之间的夹角
+			for(var i = 1; i < n; i++){
+				angle += counterclockwise ? -delta : delta;
+				c.lineTo(x + r*Math.sin(angle), y - r*Math.cos(angle));
+			}
+			c.closePath();		// 将最后一个顶点和起点连接起来
+		}
+	</script>
+</body>
+</html>

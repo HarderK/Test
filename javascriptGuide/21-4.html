@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<canvas id="can" width=500 height=500>
+		
+	</canvas>
+	<script type="text/javascript">
+		/**
+		 * 定义一个以(x,y)为中心，半径为r的规则n边形
+		 * 每个顶点都均匀分布在圆周上
+		 * 将第一个顶点放在最上面，或者指定一定角度
+		 * 除非最后一个参数是true，否则顺时针旋转
+		 */
+		function polygon(c,n,x,y,r,angle,counterclockwise){
+			angle = angle || 0;
+			counterclockwise = counterclockwise || false;
+			c.moveTo(x + r*Math.sin(angle), y - r*Math.cos(angle));		// 从第一个顶点开始一条新的路径
+			var delta = 2 *  Math.PI / n;		//两个顶点之间的夹角
+			for(var i = 1; i < n; i++){
+				angle += counterclockwise ? -delta : delta;
+				c.lineTo(x + r*Math.sin(angle), y - r*Math.cos(angle));
+			}
+			c.closePath();		// 将最后一个顶点和起点连接起来
+		}
+
+		var canvas = document.getElementById("can");
+		c = canvas.getContext("2d")
+		c.beginPath();
+		polygon(c,3,50,70,50);
+		polygon(c,4,150,60,50,Math.PI/4);
+		polygon(c,5,255,55,50);
+		polygon(c,6,365,53,50,Math.PI/6);
+		polygon(c,4,365,53,20,Math.PI/4,true);
+		c.fillStyle = "#ccc";
+		c.strokeStyle = "#008";
+		c.lineWidth = 5;
+		c.fill();
+		c.stroke();
+
+		function rotateAbout(c, theta, x, y){
+			var ct = Math.cos(theta), st = Math.sin(theta);
+			
+		}
+	</script>
+</body>
+</html>
