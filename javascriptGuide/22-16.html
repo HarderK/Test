@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		window.onload = function(){
+			var nick = prompt("Enter your nickname");
+			var input = document.getElementById("input");
+			input.focus();
+
+			// 打开一个WebSocket，用于发送和接收聊天消息
+			// 假设下载的HTTP服务器作为WebSocket服务器运作，并且使用同样的主机名和端口
+			// 只是协议有https://变成ws://
+			var socket = new WebSocket("ws://" + location.host + "");
+
+			// 下面展示如何通过WebSocket从服务器获取消息
+			socket.onmessage = function(event){
+				var msg = even.data;			// 从事件对象中获取消息内容
+				var node = document.createTextNode(msg);
+				var div = document.createElement("div");
+				div.appendChild(node);
+				document.body.insertBofore(div, input);
+				input.scrollIntoView();
+			};
+
+			// 下面展示如果通过WebSocket发送消息给服务器端
+			input.onchange = function(){
+				var msg = nick + ":" + input.value;
+				socket.send(msg);
+				input.value = "";
+			};
+		}
+
+		/**
+		 * 这是运行在NodeJS上的服务器端JavaScript
+		 * 在HTTP服务器之上，它运行一个WebSocket服务器，该服务器来自
+		 * 第三方WebSocket库实现
+		 * 如果得到"/"的一个HTTP请求，则返回聊天室客户的的HTML文件
+		 * 除此之外任何HTTP请求都返回404
+		 * 通过WebSocket协议接收到的消息都仅广播给所有激活状态的连接
+		 */
+		var http = require('http');		// 使用Node的HTTP服务器API
+		var ws = require('websocket-server');		// 使用第三方WebSocket库
+
+		// 启动阶段，读取聊天客户的的资源文件
+		var clienui = require('fs').readFileSync("wachatclient.html");
+		//创建一个HTTP服务器
+		var httpserver = new http.Server();
+		
+	</script>
+</body>
+</html>

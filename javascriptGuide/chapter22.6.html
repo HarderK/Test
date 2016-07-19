@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="file" accept="image/*" multiple onchange="fileinfo(this.files)">
+
+	<script>
+		function fileinfo(files){
+			for(var i = 0; i < files.length; i++){
+				var f = files[i];
+				console.log(f.name, f.size, f.type, f.lastModifiedDate);
+			}
+		}
+
+		/**
+		 * 以Blob的形式获取URL指定的内容， 并将其传递给指定的回调函数
+		 */
+		function getBlob(url, callback){
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", url);
+			xhr.responseType = "blob";
+			xhr.onload = function(){		// onlaod事件比onreadystatechange事件容易
+				callback(xhr.response);
+			};
+			xhr.send(null);
+		}
+
+		var bb = new BlobBuilder();
+
+		bb.append("This blob contains this text and 10 big-endian 32-bit signed ints.");
+		bb.append("\0");		// NUL结束符表示字符串的结束
+		// 将数据存储到ArrayBuffer中
+		var ab = new ArrayBuffer(4*10);
+		var dv = new DataView(ab);
+		for(var i = 0; i < 10; i++) dv.setInt32(i*4,i);
+
+		bb.append(ab);
+		var blob = bb.getBlob("x-optional/mime-type-here");
+	</script>
+</body>
+</html>
