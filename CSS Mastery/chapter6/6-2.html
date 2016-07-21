@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		ul.nav {
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+			width: 10em;
+			background: #8BD400;
+			border: 1px solid #221B76;
+			border-radius: 0.8em;
+		}
+		
+		/* 为了在菜单项上创建斜面效果，需要把顶边框设置的比背景颜色浅，让底边框颜色深一些*/
+		ul.nav a{
+			display: block;
+			color: #2E40AE;
+			text-decoration: none;
+			border-top: 1px solid #E4FFD3;
+			border-bottom: 1px solid #486B02;
+			background: url(img/arrow.gif) no-repeat 5% 50%;
+			padding: 0.3em 1em;
+		}
+
+		ul.nav:last-child a {
+			border-bottom: 0;
+		}
+
+		ul.nav a:hover, ul.nav a:focus, ul.nav .selected a{
+			color: #E4FFD3;
+			background-color: #6DA203;
+		}
+
+		ol.pagination {
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+		}
+		ol.pagination li {
+			float: left;
+			margin-right: 0.6em;
+		}
+		ol.pagination a, ol.pagination li.selected {
+			display: block;
+			padding: 0.2em 0.5em;
+			border: 1px solid #ccc;
+			text-decoration: none;
+		}
+		ol.pagination a:hover, ol.pagination a:focus, ol.pagination li.selected {
+			background-color: #179DDA;
+			color: white;
+			border-radius: 0.5em;
+		}
+		ol.pagination a[rel="prev"], ol.pagination a[rel="next"] {
+			border: none;
+		}
+		ol.pagination a[rel="prev"]:before {
+			content: "\00AB";
+			padding-right: 0.5em;
+		}
+		ol.pagination a[rel="next"]:after {
+			content: "\00BB";
+			padding-left: 0.5em;
+		}
+		
+	</style>
+	<script>
+	window.onload = function(){
+		var ul = document.getElementsByTagName('ul')[0];
+		ul.onclick = function(e){
+			e = e || window.event;
+			var ele = e.target;
+			for(var i = 0; i < ul.childNodes.length; i++){
+				if(ul.childNodes[i].className !== "selected") continue;
+				ul.childNodes[i].className = "";
+			}
+			ele.parentNode.className = "selected";
+			e.preventDefault();
+		}
+	};
+
+	</script>
+</head>
+<body>
+	<ul class="nav">
+		<li><a href="">hello chapter1</a></li>
+		<li><a href="">hello chapter2</a></li>
+		<li><a href="">hello chapter3</a></li>
+		<li><a href="">hello chapter4</a></li>
+		<li><a href="">hello chapter5</a></li>
+		<li><a href="">hello chapter6</a></li>
+	</ul>
+
+	<ol class="pagination">
+		<li><a href="" rel="prev">Prev</a></li>
+		<li><a href="">1</a></li>
+		<li><a href="">2</a></li>
+		<li><a href="">3</a></li>
+		<li><a href="">4</a></li>
+		<li><a href="">5</a></li>
+		<li><a href="" rel="next">Next</a></li>
+	</ol>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		a {
+			display: block;
+			width: 6.6em;
+			height: 1.4em;
+			line-height: 1.4;
+			text-align: center;
+			text-decoration: none;
+			border: 1px solid #66a300;
+			background-color: #8cca12;
+			color: #fff;
+			text-shadow: 2px 2px 2px #66a300;
+			-moz-box-shadow: 2px 2px 2px #ccc;
+			-webkit-box-shadow: 2px 2px 2px #ccc;
+			box-shadow: 2px 2px 2px #ccc;
+			background-image: gradient(linear, left top, left bottom, from(#abe142), to(#67a400));
+		}
+		a.tooptip {
+			position: relative;
+		}
+		a.tooltip span {
+			display: none;
+		}
+		a.tooltip:hover span {
+			display: block;
+			position: absolute;
+			top: 1em;
+			left: 2em;
+			padding: 0.2em 0.6em;
+			border: 1px solid #996633;
+			background-color: #FFFF66;
+			color: #000;
+		}
+	</style>
+</head>
+<body>
+	<a href="">Book Now </a>
+
+	<p><a href="http://www.baidu.com" class="tooltip">Andy Budd<span> (This website rocks) </span></a>
+		is a web developer based in Brighton England.
+	</p>
+</body>
+</html>
