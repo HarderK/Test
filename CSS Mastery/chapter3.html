@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#branding {
+			width: 70em;
+			height: 10em;
+			position: relative;
+		}
+		#branding .tel {
+			position: absolute;
+			right: 1em;
+			bottom: 1em;
+			text-align: right;
+		}
+
+		.news {
+			background: gray;
+			border: solid 1px black;
+		}
+
+		.news img {
+			float: left;
+		}
+		.news p {
+			float: right;
+		}
+		.news:after {
+			content: ".";
+			height: 0;
+			visibility: hidden;
+			display: block;
+			clear: both;
+		}
+	</style>
+</head>
+<body>
+	<div id="branding">
+		<p class="tel"> Tel: 3249 3243 2349</p>
+	</div>
+
+	<div class="news">
+		<img src="../css/button.png" alt="my pic">
+		<p>Some text</p>
+	</div>
+</body>
+</html>
