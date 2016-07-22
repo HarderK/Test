@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.imagemap {
+			width: 333px;
+			height: 500px;
+			position: relative;
+		}
+
+		.imagemap ul {
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+		}
+
+		.imagemap a {
+			position: absolute;
+			display: block;
+			width: 50px;
+			height: 60px;
+			/* 需要设置文本缩进让其从屏幕上消失 */
+			text-indent: -1000em;
+		}
+
+
+		.imagemap .rich a {
+			top: 50px;
+			left: 80px;
+		}
+
+		.imagemap .sophie a {
+			top: 90px;
+			left: 200px;
+		}
+
+		.imagemap .cath a {
+			top: 140px;
+			left: 55px;
+		}
+
+		.imagemap .james a {
+			top: 140px;
+			left: 145px;
+		}
+
+		.imagemap .paul a {
+			top: 165px;
+			left: 245px;
+		}
+
+		.imagemap a:hover, .imagemap a:focus {
+			border: 1px solid #fff;
+		}
+	</style>
+</head>
+<body>
+	<div class="imagemap">
+		<img src="img/nerdcore.jpg" alt="Some of the Clearleft team" width="333" height="500">
+		<ul>
+			<li class="rich"><a href="" title="Richard Rutter">
+			Richard Rutter</a></li>
+			<li class="sophie"><a href="" title="Sophie Barrett">Sophie Barrett</a></li>
+			<li class="cath"><a href="" title="Cathy Jones">Cathy Jones</a></li>
+			<li class="james"><a href="" title="James Box">James Box</a></li>
+			<li class="paul"><a href="" title="Paul Annett">Paul Annett</a></li>
+		</ul>
+	</div>
+</body>
+</html>

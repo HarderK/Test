@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		fieldset#favoriteColor {
+			margin: 0;
+			padding: 0;
+			border: none;
+			background: transparent;
+		}
+
+		#favoriteColor h2 {
+			width: 10em;
+			float: left;
+			font-size: 1em;
+			font-weight: normal;
+		}
+
+		#favoriteColor .col {
+			width: 8em;
+			float: left;
+			clear: none;
+		}
+
+		#favoriteColor label {
+			float: none;
+		}
+	</style>
+</head>
+<body>
+	<fieldset id="favoriteColor">
+		<h2>Favorite Color:</h2>
+		<div class="col">
+			<div><label for=""><input class="checkbox" id="red" name="red" type="checkbox" value="red"> red </label></div>
+		</div>
+		<div class="col">
+			<div><label for=""><input class="checkbox" id="orange" name="orange" type="checkbox" value="orange"> orange </label></div>
+		</div>
+	</fieldset>
+</body>
+</html>

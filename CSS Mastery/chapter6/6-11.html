@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.imagemap {
+			width: 333px;
+			height: 500px;
+			position: relative;
+		}
+
+		.imagemap ul {
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+		}
+
+		.imagemap a {
+			position: absolute;
+			display: block;
+			background-image: url(img/shim.gif);
+			color: #000;
+			text-decoration: none;
+			border: 1px solid transparent;
+		}
+
+		.imagemap a .outer {
+			display: block;
+			border: 1px solid transparent;
+		}
+		
+		.imagemap a .inner {
+			display: block;
+			width: 50px;
+			height: 60px;
+			border: 1px solid transparent;
+		}
+
+		.imagemap .rich a {
+			top: 50px;
+			left: 80px;
+		}
+
+		.imagemap .sophie a {
+			top: 90px;
+			left: 200px;
+		}
+
+		.imagemap .cath a {
+			top: 140px;
+			left: 55px;
+		}
+
+		.imagemap .james a {
+			top: 140px;
+			left: 145px;
+		}
+
+		.imagemap .paul a {
+			top: 165px;
+			left: 245px;
+		}
+
+		.imagemap a:hover, .imagemap a:focus {
+			border-color: #d4d82d;
+		}
+
+		.imagemap a .note {
+			position: absolute;
+			bottom: -3em;
+			width: 7em;
+			padding: 0.2em 0.5em;
+			background-color: #ffc;
+			text-align: center;
+			left: -1000em;
+			margin-left: -4em;
+		}
+
+		.imagemap a:hover .note, .imagemap a:focus .note {
+			left: 25px;
+		}
+
+		.imagemap:hover a .outer, .imagemap:focus a .outer {
+			border-color: #000;
+		}
+
+		.imagemap:hover a .inner, imagemap:focus a .inner {
+			border-color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<div class="imagemap">
+		<img src="img/nerdcore.jpg" alt="Some of the Clearleft team" width="333" height="500">
+		<ul>
+			<li class="rich">
+				<a href=""><span class="outer">
+				<span class="inner">
+				<span class="note">
+					Richard Rutter
+				</span></span></span>
+				</a>
+			</li>
+			<li class="sophie">
+				<a href=""><span class="outer">
+				<span class="inner">
+				<span class="note">
+					Sophie Barret
+				</span></span></span>
+				</a>
+			</li>
+			<li class="cath">
+				<a href=""><span class="outer">
+				<span class="inner">
+				<span class="note">
+					Cathy Jones
+				</span></span></span>
+				</a>
+			</li>
+			<li class="james">
+				<a href=""><span class="outer">
+				<span class="inner">
+				<span class="note">
+					James Box
+				</span></span></span>
+				</a>
+			</li>
+			<li class="paul">
+				<a href=""><span class="outer">
+				<span class="inner">
+				<span class="note">
+					Paul Annet
+				</span></span></span>
+				</a>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

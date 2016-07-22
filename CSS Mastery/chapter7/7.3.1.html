@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#monthOfBirthLabel, #yearOfBirthLabel {
+			/*display: none;*/
+			display: block;
+			text-indent: -1000em;
+			width: 0;
+		}
+
+		input#dateOfBirth {
+			width: 3em;
+			margin-right: 0.5em;
+		}
+
+		select#monthOfBirth {
+			width: 10em;
+			margin-right: 0.5em;
+		}
+		input#yearOfBirth {
+			width: 5em;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<label for="dateOfBirth">Date of Birth:</label>
+		<input name="dateOfBirth" id="dateOfBirth" type="text">
+		<label id="monthOfBirthLabel" for="monthOfBirth">Month of Birth:</label>
+			<select name="monthOfBirth" id="monthOfBirth">
+				<option value="1.html">January</option>
+				<option value="2">February</option>
+				<option value="3">March</option>
+			</select>
+		<label id="yearOfBirthLabel" for="yearOfBirth">Year of Birth:</label>
+		<input name="yearOfBirth" id="yearOfBirth" type="text">
+	</div>
+</body>
+</html>

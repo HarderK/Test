@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.remote {
+			width: 333px;
+			height: 500px;
+			position: relative;
+		}
+
+		.remote ul {
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+		}
+
+		.remote a .hotspot {
+			width: 50px;
+			height: 60px;
+			position: absolute;
+		}
+
+		.remote .rich a .hotspot{
+			top: 50px;
+			left: 80px;
+		}
+
+		.remote .sophie a .hotspot{
+			top: 90px;
+			left: 200px;
+		}
+
+		.remote .cath a .hotspot{
+			top: 140px;
+			left: 55px;
+			width: 60px;
+			height: 80px;
+		}
+
+		.remote .james a .hotspot{
+			top: 140px;
+			left: 145px;
+		}
+
+		.remote .paul a .hotspot{
+			top: 165px;
+			left: 245px;
+			width: 60px;
+			height: 80px;
+		}
+
+		.remote a:hover, .remote a:focus {
+			border: 1px solid #fff;
+		}
+
+		.remote a .link {
+			position: absolute;
+			display: block;
+			width: 10em;
+			right: -11em;
+			cursor: pointer;
+		}
+
+		.remote .rich a .link {
+			top: 0;
+		}
+
+		.remote .sophie a .link {
+			top: 1.2em;
+		}
+
+		.remote .cath a .link {
+			top: 2.4em;
+		}
+
+		.remote .james a .link {
+			top: 3.6em;
+		}
+
+		.remote .paul a .link {
+			top: 4.8em;
+		}
+
+		.remote a:hover .hotspot, .remote a:focus .hotspot {
+			border: 1px solid #fff;
+		}
+
+		.remote a:hover .link, .remote a:focus .link {
+			color: #0066FF;
+		}
+	</style>
+</head>
+<body>
+	<div class="remote">
+		<img src="img/nerdcore.jpg" alt="Some of the Clearleft team" width="333" height="500">
+		<ul>
+			<li class="rich">
+			<a href="" title="Richard Rutter">
+			<span class="hotspot"></span>
+			<span class="link">&raquo; Richard Rutter</span>	
+			
+			</a>
+			</li>
+			<li class="sophie">
+			<a href="" title="Sophie Barrett">
+			<span class="hotspot"></span>
+			<span class="link">&raquo; Sophie Barrett</span>
+			
+			</a>
+			</li>
+			<li class="cath">
+			<a href="" title="Cathy Jones">
+			<span class="hotspot"></span>
+			<span class="link">&raquo; Cathy Jones</span>
+			
+			</a>
+			</li>
+			<li class="james">
+			<a href="" title="James Box">
+			<span class="hotspot"></span>
+			<span class="link">&raquo; James Box</span>
+			
+			</a>
+			</li>
+			<li class="paul">
+			<a href="" title="Paul Annett">
+			<span class="hotspot"></span>
+			<span class="link">&raquo; Paul Annett</span>
+			
+			</a>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>
