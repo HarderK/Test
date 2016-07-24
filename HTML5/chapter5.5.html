@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<canvas width=300 height=200 style="border:1px solid black">
+		
+	</canvas>
+	<script>
+		var canvas = document.getElementsByTagName("canvas")[0];
+		if(canvas.getContext) {
+			var context = canvas.getContext("2d");
+			context.strokeStyle = "black";
+			context.fillStyle = "red";
+			//context.beginPath();
+			context.fillRect(50, 25, 100, 100);
+			context.stroke();
+
+			context.strokeStyle = "green";	
+			context.arc(150, 125, 50, 0, Math.PI*2, true);
+			context.clip();
+			context.translate(150, 125);
+			context.fillRect(-50, 0, 100, 50);
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<video src="video.ogg">
+		<object data="videoplayer.swf" type="application/x-shockwave-flash">
+			<param name="movie" value="video.swf">
+		</object>
+	</video>
+	<audio controls="controls" autoplay loop>
+		<source src="samplesong.ogg" type="audio/ogg">
+		<source src="samplesong.mp3" type="audio/mpeg">
+		您的浏览器不支持audio标签
+	</audio>
+	<video id="movies" onmouseover="this.play()" onmouseount="this.pause();" autobuffer="true" width=400 height=300>
+		<source src="test.wmv">
+	</video>
+
+</body>
+</html>

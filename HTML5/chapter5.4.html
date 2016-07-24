@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<canvas width=300 height=300 style="border: solid 1px #000;">
+		该浏览器不支持canvas，请更换浏览器
+	</canvas>
+	<canvas width=300 height=300 style="border: solid 1px #000;">
+		该浏览器不支持canvas，请更换浏览器
+	</canvas>
+	<canvas width=300 height=300 style="border: solid 1px #000;">
+		该浏览器不支持canvas，请更换浏览器
+	</canvas>
+
+	<script>
+		var canvas = document.getElementsByTagName("canvas")[0];
+		if(canvas.getContext) {
+			var context = canvas.getContext("2d");
+
+			//开始绘制矩形
+			context.fillStyle = "#ff00ff";
+			context.strokestyle = "blue";
+			context.fillRect(20, 20, 100, 100);
+			context.strokeRect(20, 20, 100, 100);
+
+			//保存当前状态
+			context.save();
+
+			// 绘制另外一个矩形
+			context.fillStyle = "blue";
+			context.fillRect(140, 20 ,100, 100);
+
+			// 恢复第一个矩形的状态
+			context.restore();
+
+			context.fillRect(20 ,140, 50, 50);
+			context.strokeRect(80, 140, 50, 50 );
+
+/*
+			context.fillStyle = "#FF00FF";
+			context.strokeStyle = "black";
+			context.arc(100, 75, 50, 0, Math.PI*2, false);
+			context.stroke();
+			context.fill();*/
+		}
+
+		function drawTop(context, fillStyle){
+			context.fillStyle = fillStyle;
+			context.beginPath();
+			context.arc(0, 0, 30, 0, Math.PI, true);
+			context.closePath();
+			context.fill();
+		}
+
+		function drawGrip(context) {
+			context.save();
+			context.fillStyle = "blue";
+			context.strokeStyle = "blue";
+			context.fillRect(-1.5, 0, 1.5, 40);
+			context.beginPath();
+			context.arc(-5, 40, 4, Math.PI, Math.PI * 2, true);
+			context.stroke();
+			context.closePath();
+			context.restore();
+		}
+		function draw() {
+			var canvas = document.getElementsByTagName("canvas")[1];
+			if(canvas.getContext){
+				var context = canvas.getContext("2d");
+				context.translate(150, 150);
+		/*		context.fillStyle = "black";
+				context.fillRect(0, 0, 20, 20);
+				context.rotate(Math.PI*(3/4));
+				context.fillRect(0,0,20,20);
+				context.translate(0, -100);
+				context.fillRect(0,0,20,20);*/
+
+				for(var i = 1; i < 9; i++){
+					context.save();
+					context.rotate(Math.PI*(2/4 + i/4));
+					context.fillRect(0,0,20,20);
+					context.translate(0, -100);
+					drawTop(context, "rgb(" + 30*i+","+30*i+"," + 30*i);
+					drawGrip(context);
+					context.restore();
+				}
+			}
+		}
+
+		draw();
+
+		function scaleDraw(){
+			var canvas = document.getElementsByTagName('canvas')[2];
+			if(canvas.getContext){
+				var context = canvas.getContext("2d");
+				context.translate(200, 20);
+				for(var i=1; i<80; i++){
+					context.save();
+					context.translate(30, 30);
+					context.scale(0.95, 0.95);
+					context.rotate(Math.PI/12);
+					context.beginPath();
+					context.fillStyle = "red";
+					context.globalAlpha = "0.4";
+					context.arc(0,0,50,0,Math.PI*2,true);
+					context.fill();
+				}
+			}
+		}
+		//window.addEventListener("load", scaleDraw, false);
+		scaleDraw();
+	</script>
+</body>
+</html>
