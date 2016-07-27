@@ -1,0 +1,7 @@
+#chat {
+	display: none;
+}
+
+li.confirmed {
+	background: url(success.png) no-repeat -20px center;
+}
