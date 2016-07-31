@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="test"> This is a test</div>
+	<script>
+		var name = "The Window";
+
+		var obj = {
+			name : "My Object",
+			getNameFunc : function(){
+				//var that = this;
+				return function test(){
+					return this.name;
+				};
+			}
+		};
+
+		console.log(obj.getNameFunc()());		// 要有宿主环境测试才有效
+
+		// 匿名函数循环引用了element，导致无法减少element的引用数
+		// 闭包引用的包含函数的整个活动对象，因此还需要将其他对象的引用设为null
+		function assignHandler(){
+			var element = document.getElementById("test");
+			var id = element.id;
+			element.onclick = function(){
+				alert(id);
+			};
+
+			element = null;
+		}
+	</script>
+</body>
+</html>
+
