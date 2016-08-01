@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div class="teen" id="fasd">
+		<div id="test2" class="teen">
+			<ol>
+				<li>test1111</li>
+				<li>test1112</li>
+				<li>test1113</li>
+				<li>test1114</li>
+			</ol>
+		</div>
+		<ul>
+			<li>test1</li>
+			<li>test2</li>
+			<li>test3</li>
+			<li>test4</li>
+		</ul>
+		<h1>NBA</h1>
+	</div>
+	<script>
+		window.onload = function(){
+			var someNode = document.getElementsByTagName('div').item(0);
+			if(someNode.nodeType == 1) {
+				console.log("Node is an element");
+				var value = someNode.nodeName;		// nodeName保存着元素的标签名
+			}
+
+			var firstChild = someNode.childNodes[0];
+			firstChild = someNode.firstChild;
+			var count = someNode.childNodes.length;
+			var arrayOfNodes = Array.prototype.slice.call(someNode.childNodes, 0);
+
+			if(someNode.nextSibling === null) {
+				console.log("Last node in the parent's childNodes list.");
+			} else if (someNode.previousSibling === null) {
+				console.log("First node in the parent's childNodes list.");
+			}
+
+			console.log(someNode.ownerDocument);	// 文档节点
+
+			var node = document.createElement("div");
+			node.id = "test1";
+			node.className = "justify";
+			var text = document.createTextNode("hello world");
+			node.appendChild(text);
+			var returnedNode = someNode.appendChild(node);
+			console.log(returnedNode);
+			returnedNode = document.body.insertBefore(node, someNode);		// node从原先的位置移动到现在的位置
+			console.log(returnedNode);
+
+			var node1 = document.createElement("p");
+			var text = document.createTextNode("It's my life1");
+			node1.appendChild(text);
+			// 替换节点
+			var returnedNode = document.body.replaceChild(node1, node);
+			console.log(returnedNode);
+
+			for (var i = 0; i < someNode.childNodes.length; i++) {
+				if(someNode.childNodes[i].nodeType != 1) continue;
+				console.log(someNode.childNodes[i]);
+				console.log("next");
+			}
+
+
+			var shallowList = someNode.cloneNode(false);
+			console.log(shallowList);
+			document.body.normalize();
+			console.log(document.body.lastChild);
+			//document.body.insertBefore(shallowList, document.body.lastChild.previousSibling);	
+
+			console.log(document.firstChild);
+		}		
+	</script>
+</body>
+</html>

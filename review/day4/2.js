@@ -118,3 +118,44 @@ function func(y) {return this.x + y;}
 var o = {x: 1};
 var g = func.bind(o);
 console.log(g(2));
+
+var pattern = /fsdf/g;
+console.log(typeof pattern);	// object
+
+function classof(o) {
+	return Object.prototype.toString.call(o);
+}
+
+console.log(classof(pattern));
+console.log(classof(null));
+console.log(classof(undefined));
+
+
+function type(o) {
+	var t, c, n;		// type, class, name
+	if(o === null) return "null";
+	if(o !== o) return "nan";
+
+	// 如果typeof的值不是"object"，则使用这个值
+	// 这可以识别出原始值的类型和函数
+	if((t = typeof o) !== "object") return t;
+
+	// 返回对象的类名，除非值为"object"
+	// 这种方式可以识别出大多数的内置对象
+	if((c = classof(o)) !== "Object") return c;
+
+	// 如果以构造函数的名字存在的话
+	if(o.constructor && typeof o.constructor === "function" && (n = o.constructor.getName()))
+		return n;
+}
+
+function classof(o) {
+	return Object.prototype.toString.call(o).slice(8, -1);
+}
+
+Function.prototype.getName = function(){
+	if("name" in this) {
+		return this.name;
+	}
+	return this.name = this.toString().match(/function\s([^(]*)\(/)[1];
+}
