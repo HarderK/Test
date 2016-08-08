@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		function createXHR() {
+
+			if(typeof XMLHttpRequest != "undefined") {
+				return new XMLHttpRequest();
+			} else if(typeof ActiveXObject != "undefined") {
+				if(typeof arguments.callee.activeXString != "string") {
+					var versions = ["MSXML2.XMLHttp.6.0", "MSXML2.XMLHttp.3.0", "MSXML2.XMLHttp"],
+						i, len;
+
+					for(i = 0, len = versions.length; i < len; i++) {
+						try {
+							new ActiveXObject(versions[i]);
+							arguments.callee.activeXString = versions[i];
+							break;
+						} catch (ex) {
+
+						}
+					}
+				}
+
+				return new ActiveXObject(arguments.callee.activeXString);
+			} else {
+				throw new Error("NO XHR object available");
+			}
+			
+		}
+
+		var xhr = createXHR();
+		xhr.onreadystatechange = function(){
+			if(xhr.readystate == 4) {
+				if((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304){
+					console.log(xhr.responseText);
+					var myHeader = xhr.getResponseHeader("Content-Type");
+					var allHeaders = xhr.getAllResponseHeaders();
+				} else {
+					console.log("Request was unsuccessful: " + xhr.status);
+				}
+			}
+		};
+
+		// xhr.open("get", "example.txt", true);
+		// xhr.send(null);
+		
+		function addURLParam(url, name, value) {
+			url += (url.indexOf("?") == -1) ? "?" : "&";
+			url += encodeURIComponent(name) + "=" + encodeURIComponent(value);
+			return url;
+		}
+
+		xhr.open("post", "postexample.php", true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.send("name=test&value=test");
+
+
+		xhr.open("post", "postexample.php", true);
+		var form = document.forms.userInfo;
+		xhr.overrideMimeType("text/xml");
+		xhr.send(new FormData(form));	// XHR能够识别传入的数据类型是FormData的实例，并配置适当的头部信息
+	</script>
+</body>
+</html>

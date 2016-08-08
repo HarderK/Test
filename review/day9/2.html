@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var book = {
+			title : "Professional JavaScript",
+			author : ["Nicholas C.Zakas", "Li Cao"],
+			edition : 3,
+			year : 2011
+		};
+
+		var jsonText = JSON.stringify(book);
+		console.log(jsonText);
+
+		console.log(JSON.stringify(book, ["title", "edition"]));
+
+		var jsonText = JSON.stringify(book, function(key, value){
+			if(key == "edition") return ++value;
+			return value;
+		});
+		console.log(jsonText);
+
+		var jsonText = JSON.stringify(book, undefined);
+		console.log(JSON.parse(jsonText));
+
+		var book = {
+			title : "Professional JavaScript",
+			author : ["Nicholas C.Zakas", "Li Cao"],
+			edition : 3,
+			year : 2011,
+			toJSON : function() {
+				return this.title;
+			}
+		};
+		console.log(JSON.stringify(book));
+
+		var book = {
+			title : "Professional JavaScript",
+			author : ["Nicholas C.Zakas", "Li Cao"],
+			edition : 3,
+			year : 2011,
+			releaseDate : new Date(2011, 11, 1)
+		};
+
+		var jsonText = JSON.stringify(book);
+		console.log(jsonText);
+
+		var bookCopy = JSON.parse(jsonText, function(key, value){
+			if(key === "releaseDate") return new Date(value);
+
+			return value;
+		});
+
+		console.log(bookCopy);
+
+
+
+	</script>
+</body>
+</html>

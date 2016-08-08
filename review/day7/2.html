@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form name="shipping">
+		<fieldset><legend>Shipping Method </legend>
+			<label><input type="radio" name="method" value="1st">First-class</label>
+			<label><input type="radio" name="method" value="2day">2-day Air</label>
+			<label><input type="radio" name="method" value="overnite">Overnight</label>
+		</fieldset>
+		<select name="selected" multiple size=2>
+			<option value="1" selected>1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+		</select>
+		<textarea name="area" id="" cols="30" rows="10" placeholder="input your idea"></textarea>
+		<input type="submit" value="提交">
+		<input type="reset" value="重置">
+		<button type="submit">提交</button>
+		<input type="image" />
+		<button type="button">测试重置</button>
+	</form>
+	<div id="editor" contenteditable>
+		click to edit
+	</div>
+
+	<script>
+		window.onload = function(){
+			var btn = document.querySelector("button[type='button'");
+			btn.onclick = function(){
+				// document.forms.shipping.submit();
+				document.forms.shipping.reset();
+			}	
+
+			document.forms.shipping.onreset = function(event) {
+				console.log("rest 被触发");
+				event.preventDefault();
+			}
+			var methods = document.forms.shipping.elements.method;
+
+			var fieldset = document.getElementsByTagName("fieldset")[0];
+			var shipping_method;
+			fieldset.onclick = function(event){
+				for(var i = 0; i < methods.length; i++) {
+					if(methods[i].checked) shipping_method = methods[i].value;
+				}
+				console.log(shipping_method);
+			};
+			console.log(fieldset.form);
+			document.forms.shipping.onsubmit = function(e) {
+				// console.log('submit被触发');
+				// e.preventDefault();
+				// return confirm("Are you sure to submit the form");
+			};
+
+			var options = document.forms.shipping.elements.selected.options;
+			console.log(options);
+			options[2].text = "what";
+
+			console.log(document.lastModified);
+			// document.write("test");
+			// document.write("test");
+			// 
+			var area = document.forms.shipping.elements.area;
+
+			area.onblur = function(){
+				console.log(getText(this));
+			};
+
+			var div = document.getElementById('editor');
+			div.onclick = function(){
+				console.log("click");
+				var isBold = document.execCommand("bold", true, null);
+				console.log(isBold);	// false
+			};
+		};
+
+		function getSelectedText() {
+			if(window.getSelection) {
+				return window.getSelection.toString();
+			} else if (document.selection) {
+				return document.selection.createRange().text;
+			}
+		}
+
+		function getText(elt) {
+			return elt.value.substring(elt.selectionStart, elt.selectionEnd);
+		}
+	</script>
+</body>
+</html>

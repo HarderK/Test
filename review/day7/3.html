@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form name="shipping">
+		<fieldset><legend>Shipping Method </legend>
+			<label><input type="radio" name="method" value="1st">First-class</label>
+			<label><input type="radio" name="method" value="2day">2-day Air</label>
+			<label><input type="radio" name="method" value="overnite">Overnight</label>
+		</fieldset>
+		<select name="selected" multiple size=2>
+			<option value="1" selected>1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+		</select>
+		<textarea name="area" id="" cols="30" rows="10" placeholder="input your idea"></textarea>
+		<input type="submit" value="提交">
+		<input type="reset" value="重置">
+		<button type="submit">提交</button>
+		<input type="image" />
+		<button type="button">测试</button>
+	</form>
+	<div id="editor" contenteditable>
+		click to edit
+	</div>
+	<script>
+		window.onload = function(){
+			var area = document.forms.shipping.elements['area'];
+
+/*			area.onfocus = function(){
+				this.select();
+			};
+*/
+			var btn = document.querySelector("button[type='button']");
+			btn.onclick = function(){
+				if(area.setSelectionRange){
+					area.setSelectionRange(3, area.value.length-5);
+					area.focus();
+				} else if (area.createTextRange) {
+					var range = textbox.createTextRange();
+
+					// 选择所有文本
+					range.collapse(true);
+					range.moveStart("character", 0);
+					range.moveEnd("character", area.value.length);
+					range.select();
+
+					// 选择前3个字符
+					range.collapse(true);
+					range.moveStart("cha");
+				}
+			}
+		};
+	</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body><div id="myDiv" class="myClass">teta</div>
+
+	<script>
+		window.onload = function(){
+			console.log(document.body.childNodes);
+		}
+
+		function loadScriptString(code) {
+			var script = document.createElement("script");
+			script.type = "text/javascript";
+			try {	// IE浏览器中会报错
+				script.appendChild(document.createTextNode(code));
+			} catch (ex) {
+				script.text = code;
+			}
+			document.body.appendChild(script);
+		}
+
+		function loadStyleString(css) {
+			var style = document.createElement("style");
+			style.type = "text/css";
+
+			try{
+				style.appendChild(document.createTextNode(css));
+			} catch(ex) {
+				style.StyleSheet.cssText = css;
+			}
+
+			var head = document.getElementsByTagName("head")[0];
+			head.appendChild(style);
+		}
+	</script>
+</body>
+</html>

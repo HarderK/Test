@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="myDiv" data-appId="1" data-appName="apple">
+		<h1>Document</h1>
+		<p class="current">I have a dream that one day our children sit together, singing a song </p>
+
+	</div>
+	<div id="test1">haha</div>
+	<div class="my current test">Kingguo</div>
+
+	<button id="myButton">click</button>
+
+	<script>
+		window.onload = function(){
+			var myDiv = document.querySelector("#myDiv");
+			console.log(myDiv);
+			var my = document.querySelector(".my");
+			console.log(my);
+
+			var div = document.querySelector("div");
+			console.log(div);
+
+			var divs = document.querySelectorAll("div");
+			console.log(divs);
+
+
+			// 传统遍历
+			var child = divs.firstChild;
+			while(child != divs.lastChild) {
+				if(child.nodeType == 1) {
+					console.log(child.tagName);
+				}
+				child = child.nextSibling;
+			}
+
+			// 使用Element Traversal新增的元素
+			var child = divs.firstElementChild;
+			while(child != divs.lastElementChild) {
+				console.log(child.tagName);
+				child = child.nextElementSibling;
+			}
+
+			// 使用HTML5新增的getElementsByClassName()方法
+			var current = document.getElementById("myDiv").getElementsByClassName("current");
+			console.log(current);
+
+			var div = document.getElementsByClassName("current test")[0];
+			console.log(div);
+
+			// HTML5新增的classList属性
+			console.log(div.classList);
+			console.log(div.classList.add("strong"));		// 没有返回值
+
+			var classNames = div.className;
+			console.log(classNames);
+
+			var classArr = classNames.split(/\s+/);
+			for(var i = 0; i < classArr.length; i++) {
+				if(classArr[i] == "strong") {
+					var pos = i;
+					break;
+				}
+			}
+
+			classArr.splice(i,1);
+
+			div.className = classArr.join(" ");
+
+			console.log(document.activeElement);
+
+			var button = document.getElementById('myButton');
+			button.focus();
+			console.log(document.activeElement);
+			console.log(document.hasFocus());	// false;
+
+			console.log(document.readyState);	// 文档加载状态
+
+			if(document.compatMode == "CSS1Compat") {
+				console.log("Standard mode");
+			} else if(document.compatMode == "BackCompat") {
+				console.log("Quirks mode");
+			}
+
+			var head = document.head || document.getElementsByTagName("head")[0];
+
+			console.log(document.charset);
+			console.log(document.defaultCharset);		// Firefox似乎不支持
+
+			// 取得自定义属性的值
+			var dataset = myDiv.dataset;		// DOMStringMap类型
+			console.log(dataset);
+			console.log(dataset.appname);
+
+			var div = document.getElementsByTagName("div")[1];
+			div.innerHTML = "Hello & welcome, <b>\"reader\"!</b>";
+			console.log(div.innerHTML);
+
+			console.log(document.body.children);
+			console.log(document.body.contains(div));
+			console.log(div.innerText);
+		};	
+	</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form id="shipping">
+		<input type="text" name="test">
+	</form>
+	<script>
+		/*document.onDOMContentLoaded = function(event){
+			conosle.log(event.target, event.currentTarget);
+		};*/
+
+		document.addEventListener("DOMContentLoaded", function(event) {
+			var text = document.forms.shipping.elements.test;
+			/*text.oninput = function(event) {
+				console.log(event.target);
+			};*/
+			text.addEventListener("textInput", function(event){
+				console.log("hoa");
+				console.log(event.data);
+			}, false);
+			document.onwheel = function(event) {
+				console.log(event.deltaX, event.deltaY);
+			};
+		}, false);
+
+		function addEvent(target, type, handler) {
+			if(target.addEventListener){
+				target.addEventListener(type, handler, false);
+			} else {
+				target.attachEvent("on" + type, function(event) {
+					return handler.call(target, event);
+				});
+			}
+		}
+	</script>
+</body>
+</html>

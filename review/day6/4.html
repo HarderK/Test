@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="" id="test1" name="user1"></form>
+	<form action="" id="test2" name="user1"></form>
+	<form action="" id="test3"></form>
+	<form action="" id="test4"></form>
+	<script>
+		console.log(document.forms.test1);
+		console.log(document.forms.user1);
+		console.log(window.test3);
+
+		// Element对象的chldren属性
+		console.log(document.body.children);
+		console.log(document.body.getElementsByTagName("form"));
+	
+	</script>
+</body>
+</html>

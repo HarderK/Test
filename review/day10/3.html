@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+
+
+		function EventTarget(){
+			this.handlers = {};
+		}
+
+		EventTarget.prototype = {
+			constructor : EventTarget,
+			addHandler : function(type, handler) {
+				if(typeof this.handlers[type] == "undefined") {
+					this.handlers[type] = [];
+				}
+				this.handlers[type].push(handler);
+			},
+			fire : function(event) {
+				if(!event.target) {
+					event.target = this;
+				}
+				if(this.handlers[event.type] instanceof Array) {
+					var handlers = this.handlers[event.type];
+					for(var i = 0, len = handlers.length; i < len; i++) {
+						handlers[i](event);
+					}
+				}
+			},
+			removeHanlder: function(type, handler) {
+				if(this.handlers[type] instanceof Array) {
+					var handlers = this.handlers[type];
+					for(var i = 0, len = handlers.length; i < len; i++) {
+						if(handlers[i] === handler){
+							break;
+						}
+					}
+					handlers.splice(i, 1);
+				}
+			}
+		};
+
+		function handleMessage (event) {
+			console.log("Message received: " + event.message);
+		}
+
+		var target = new EventTarget();
+
+		// 添加一个时间处理程序
+		target.addHandler("message", handleMessage);
+
+		//触发事件
+		target.fire({type: "message", message: "hello world"});
+
+		//删除事件处理程序
+		target.removeHanlder({type: "message", message: "hello world"});
+
+
+		function Person(name, age) {
+			EventTarget.call(this);
+		}
+
+		// localStorage.removeItem("username");
+		var name = localStorage.username;
+
+		if(name !== "null") {
+			name = prompt("What's your name?");
+			localStorage.setItem("username", name);
+		}
+
+		for(var i = 0; i < localStorage.length; i++) {
+			var name = localStorage.key(i);
+			var value = localStorage.getItem(name);
+			console.log(name, value);
+		}
+		// console.log(typeof localStorage);
+
+		document.addEventListener("storage", function(event) {
+			console.log("test");
+		}, false);
+
+		localStorage.setItem("Key", "haha");
+		console.log(localStorage);
+
+		setTimeout(function(){
+			localStorage.clear();
+		}, 3000);
+
+		
+	</script>
+</body>
+</html>

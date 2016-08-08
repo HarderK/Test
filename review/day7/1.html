@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+		}
+		p {
+			width: 300px;
+			height: 100px;
+			overflow: scroll;
+		}
+	</style>
+</head>
+<body>
+	<div id="test" class="ts" disabled>fasd</div>
+	<p>hello worldhello worldhello worldhello worldhello worldhello worldhello worldhellohello world
+		hello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello
+		hello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello
+
+	</p>
+	<input type="text" name="" disabled>
+		<form action="">
+		<input type="text">
+		<input type="radio" name="sex">
+		<input type="radio" name="sex">
+		<input type="reset">
+	</form>
+	<script>
+	window.onload = function(){
+		var div = document.getElementById("test");
+		console.log(div.hasAttribute("disabled"));  // disabled属性用来禁用input元素
+
+		div.insertAdjacentHTML("afterbegin", "这是追加的内容");
+		console.log(div.textContent);
+		console.log(div.innerText);
+
+		var input = document.forms[0].firstElementChild;
+		console.log(input);
+		// 删除节点
+		input.parentNode.removeChild(input);
+		console.log(input);		// 在文档中仍然存在
+		input = null;		// 便于内存回收
+
+
+
+		// scroll
+		var p = document.getElementsByTagName('p')[0];
+		console.log(p.offsetWidth, p.offsetHeight);
+		console.log(p.clientWidth, p.clientHeight);
+		console.log(p.scrollLeft, p.scrollTop);
+		console.log(p.scrollWidth, p.scrollHeight);
+
+		console.log(p.getBoundingClientRect());
+
+		// 获得文档的高度
+		var viewHeight = getViewportSize().h;
+		console.log(viewHeight);
+		console.log(document.documentElement.offsetHeight);
+		console.log(document.body.offsetHeight);
+
+	}
+	// 查询窗口滚动条的位置
+	function getScrollOffsets(w) {
+		// 使用指定的窗口，如果不指定则当时当前窗口
+		w = w || window;
+
+		// 处理IE8及更早的版本，其他浏览器都可以使用
+		if (w.pageXOffset != null) return {x: w.pageXOffset, y: w.pageYOffset};
+
+		// 对标准模式下的IE（或任何浏览器）
+		var d = w.document;
+		if(document.compatMode == "CSS1Compat") {
+			return {x: d.documentElement.scrollLeft, y: d.documentElement.scrollTop};
+		} 
+
+		return {x: d.body.scrollLeft, y: d.body.scrollTop};
+	}
+
+	// 查询窗口的视口大小
+	function getViewportSize(w) {
+		w = w || window;
+
+		if(w.innerWidth != null) return {w: w.innerWidth, h: w.innerHeight};
+
+		// 对标准模式下的IE
+		var d = w.document;
+		if(document.compatMode == "CSS1Compat") {
+			return {w: d.documentElement.clientWidth, y: d.documentElement.clientHeight};
+		}
+		return {w: d.body.clientWidth, y: d.body.clientHeight};
+	}
+
+
+
+	(function(){
+		// 如果outerHTML存在则直接返回
+		if(document.createElement("div").outerHTML) return;
+
+		// 返回this引用元素外部的HTML
+		function outerHTMLGetter(){
+			var container = document.createElement("div");
+			container.appendChild(this.cloneNode(true));		// 复制到该虚拟节点
+			return container.innerHTML;
+		}
+	}());
+
+	function textContent(e) {
+		var child, type, s="";
+		for(child = e.firstChild; child != null; child = child.nextSibling) {
+			type = child.nodeType;
+			if(type === 3 || type ===4) {
+				s += child.data;
+			} else if (type === 1) {
+				s += textContent(e);
+			}
+		}
+
+		return s;
+	}
+
+	(function(){
+		function func() {
+			scrollBy(0, 10);
+			setTimeout(func, 1000);	
+		}
+		// setTimeout(func,1000);
+	}());
+
+	function getElementPosition(elt) {
+		var x = 0, y = 0;
+		// 循环已累计偏移量
+		for (var e = elt; e != null; e = e.offsetParent) {
+			x += e.offsetLeft;
+			y += e.offsetTop;
+		}
+
+		// 再次循环所有祖先元素，减去滚动的偏移量
+		// 这也减去了主滚动条
+		for (var e = elt.parentNode; e != null && e.nodeType ==1; e = e.parentNode) {
+			x -=e.scrollLeft;
+			y -=e.scrollTop;
+
+		}
+		return {x:x, y:y};s
+	}
+	</script>
+</body>
+</html>

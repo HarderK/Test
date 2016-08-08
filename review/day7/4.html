@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form id="shipping">
+		<select name="location" id="selLocation">
+			<option value="Beijing" >北京</option>
+			<option value="Shanghai" selected>上海</option>
+			<option value="Wuhan" selected>武汉</option>
+			<option value="Guangzhou">广州</option>
+			<option>杭州</option>
+			option
+		</select>
+
+		<button type="button">测试</button>
+	</form>
+
+	<script>
+	window.onload = function(){
+		var selectBox = document.forms.shipping.elements.location;
+		for(var i = 0; i < selectBox.options.length; i++) {
+			var text = selectBox.options[i].text;
+			var value = selectBox.options[i].value;
+			console.log(text, value);
+		}
+
+		console.log(selectBox.selectedIndex);
+
+		selectBox.onchange = function() {
+			console.log(selectBox.options[selectBox.selectedIndex].selected);
+		};
+
+		var btn = document.querySelector("button[type='button']");
+		btn.onclick = function(){
+			// var newOption = new Option("深圳", "shenzhen");
+
+			// selectBox.add(newOption, selectBox.options[0]);
+
+			var optionToMove = selectBox.options[4];
+			selectBox.insertBefore(optionToMove, selectBox.options[optionToMove.index-1]);
+		};
+	};
+
+	function getSelectedOptions(selectBox) {
+		var result = [];
+		var option = null;
+
+		for (var i = 0, len = selectBox.options.length; i < len; i++) {
+			option = selectBox.options[i];
+			if(option.selected) {
+				result.push(option);
+			}
+		}
+		return result;
+	}
+	</script>
+</body>
+</html>

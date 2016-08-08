@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form id="shipping">
+		<input type="button" value="click me">
+		<input type="text" name="test">
+	</form>
+	<script>
+		window.onload = function(){
+			document.addEventListener("mousewheel", function(event){
+				console.log(event.wheelDelta);
+			}, false);
+
+			document.addEventListener("DOMMouseScroll", function(event){
+				console.log(event.detail);
+			}, false);
+
+			var input = document.forms.shipping.elements.test;
+		/*	input.onkeypress = function(event){
+				console.log("hao");
+				console.log(event.charCode);
+			};*/
+
+/*			input.ontextInput = function(event){
+				console.log("hao");
+				console.log(event.data);
+				console.log(event.inputMethod);
+			};*/
+
+			input.addEventListener("compositionupdate", function(event) {
+				console.log(event.data);
+			}, false);
+		};
+
+		var EventUtil = {
+			getCharCode : function(event){
+				if(typeof event.charCode === "number") {
+					return event.charCode;
+				} else {
+					return event.keyCode;
+				}
+			}
+		}
+	</script>
+</body>
+</html>

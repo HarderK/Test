@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		// IE8引入了XDR
+		var xdr = new XDomainRequest();
+		xdr.onload = function(){
+			console.log(xdr.responseText);
+		};
+		xdr.onerror = function(){
+			console.log("an error occured");
+		};
+
+		xdr.open("get", "http://fff");
+		xdr.send(null);
+
+		// post
+		var xdr = new XDomainRequest();
+		xdr.onload = function(){
+			conosle.log(xdr.responseText);
+		};
+		xdr.onerror = function(){
+			console.log("an error occured");
+		};
+
+		xdr.timeout = 1000;
+		xdr.ontimeout = function(){
+			conosle.log("request took too long");
+		};
+		xdr.open("post", "http:fff");
+		xdr.contentType = "application/x-www-form-urlencoded";
+		xdr.send("name1=value&name2=value2");
+
+		function createStreamingClient(url, progress, finished) {
+			var xhr = new XMLHttpRequest(),
+				received = 0;
+
+			xhr.open("get", url, true);
+			xhr.onreadystatechange = function(){
+				var result;
+
+				if(xhr.readyState == 3) {
+					result = xhr.responseText.substring(received);
+					received += result.length;
+
+					// 调用回调函数
+					progress(result);
+				} else if(xhr.readyState == 4) {
+					finished(xhr.responseText);
+				}
+			};
+			xhr.send(null);
+			return xhr;
+		}
+	</script>
+</body>
+</html>

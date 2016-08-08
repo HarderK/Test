@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<canvas id="drawing" width="500" height="300">
+		此浏览器不支持canvas，请更换或升级浏览器
+	</canvas>
+
+	<script>
+		var drawing = document.getElementById("drawing");
+		if(drawing.getContext) {
+			var context = drawing.getContext("2d");
+
+			var image = new Image();
+			image.src = "../../css/button.png";
+
+			context.drawImage(image, 10, 10);
+
+
+			// context.drawImage(image, 100, 100, 30, 20);
+
+			context.drawImage(image, 20, 20, 40, 40, 100, 100, 60, 60);
+		}
+	</script>
+</body>
+</html>

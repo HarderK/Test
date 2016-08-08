@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form name="shipping">
+		<input type="button" value="Click me">
+		<button type="button">测试</button>
+	</form>
+	<img src="../../css/button.png" alt="">
+	<script>
+		console.log(document.implementation.hasFeature("HTMLEvent","2.0"));
+		window.onload = function(){
+			var btn = document.forms.shipping.querySelector("input[type='button']");
+			btn.onclick = function(event) {
+				console.log(event.type);
+				console.log(event.currentTarget, event.target);
+				console.log(event.eventPhase);
+				// event.stopPropagation();
+			};
+
+			document.forms.shipping.onclick = function(event){
+				console.log(this);
+				console.log(event.currentTarget, event.target);
+				console.log(event.eventPhase);
+			};
+
+			
+			var image = new Image();
+			EventUtil.addHandler(image, "load", function(event) {
+				console.log("Image loaded");
+				console.log(event.target);
+			});	
+
+			image.src = "../../css/button.png";
+
+			EventUtil.addHandler(window, "resize", function(event){
+				console.log(event.target);
+				console.log(event.currentTarget);
+			});
+
+			window.addEventListener("scroll", function(event){
+				console.log(event.target);
+				console.log(event.currentTarget);
+				if(document.compatMode == "CSS1Compat") {
+					console.log(document.documentElement.scrollTop);
+					console.log(window.pageYOffset);
+				} else {
+					console.log(document.body.scrollTop);
+				}
+			}, false);
+		};
+
+		var EventUtil = {
+			addHandler : function(element, type, handler) {
+				if (element.addEventListener) {
+					element.addEventListener(type, handler, false);
+				} else if (element.attachEvent) {
+					element.attachEvent("on" + type, handler);
+				} else {
+					element["on" + type] = handler;
+				}
+			},
+			removeHandler : function(element, type, handler) {
+				if(element.removeEventListener) {
+					element.removeEventListener(type, handler, false);
+				} else if (element.detachEvent) {
+					element.detachEvent("on" + type, handler);
+				} else {
+					element["on" + type] = null;
+				}
+			},
+			getEvent : function(event) {
+				return event || window.event;
+			},
+			getTarget : function(event) {
+				return event.target || event.srcElement;
+			},
+			preventDefault : function(event) {
+				if(event.preventDefault) {
+					event.preventDefault();
+				} else {
+					event.returnValue = false;
+				}
+			},
+			stopPropagation : function(event) {
+				if(event.stopPropagation) {
+					event.stopPropagation();
+				} else {
+					event.cancelBubble = true;
+				}
+			}
+		};
+	</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document Test</title>
+</head>
+<body>
+	<div id="myDiv" style="background: green;">test1</div>
+	<div>test2</div>
+	<div>test3</div>
+	<script>
+		var html = document.documentElement;
+
+		// 对firefox，文档的第一个子节点是文档类型声明
+		var doctype = document.firstChild;		// document.childNodes[0];
+
+		// 取得文档标题, 取得的是文本，不是元素本身
+		var originalTitle = document.title;
+		document.title = "Hello World";
+		console.log(originalTitle);
+
+		// 取得完整的URL
+		var url = document.URL;
+
+		// 取得域名
+		var domain = document.domain;
+
+		console.log(url, domain);
+
+		document.domain = "localhost";
+
+		// 查找元素
+		var allElements = document.getElementsByTagName("*");		// 返回HTMLCollection对象
+
+		// 只有HTMLDocument才有的方法，getElementsByName()
+		// 注意不是getElementsByClassName()
+
+		// 特殊集合
+		var forms = document.forms;	// 包含文档中所有的form元素
+		var images = document.images;	// 包含文档中所有的img元素
+		var links = document.link;		// 包含文档中所有的带href属性的a元素
+
+		// DOM一致性检测, 最好同时进行能力检测
+		var hasCore = document.implementation.hasFeature("Core", "3.0");
+		console.log(hasCore);
+
+
+		// Element类型
+		var div = document.getElementById('myDiv');
+		console.log(div.tagName);
+		console.log(div.nodeValue);
+
+		// HTMLCollection类型的5个标准特性
+		console.log(div.id, div.className, div.title, div.dir, div.lang);
+		div.className = "none";
+
+		// 取得特性
+		var id = div.getAttribute("id");
+		console.log(id);
+
+		// 特殊的特性
+		var sty = div.getAttribute("style");
+		console.log(sty);
+		sty = div.style;
+		console.log(sty);		// 返回的是对象
+
+		// attributes属性
+		var attrs = div.attributes;
+		var at1 = attrs["id"].value;
+		console.log(at1);
+
+		function outputAttributes(element) {
+			var pairs = [], attrName, attrValue;
+
+			for(var i = 0, len = element.attributes.length; i < len; i++) {
+				attrName = element.attributes[i].nodeName;
+				attrValue = element.attributes[i].value;
+				paris.push(attrName + "=\"" + attrValue + "\"");
+			}
+
+			return paris.join();
+		}
+
+		// 元素也支持getElementsByTagName()方法
+		var eles = document.body.getElementsByTagName('div');
+		console.log(eles.length);
+
+		console.log(div.removeAttribute("class"));		// 没有返回值
+
+		// 文本节点
+		var textNode = document.createTextNode("<strong>Hello</strong> world!");
+		console.log(textNode.data);
+		console.log(textNode.length);
+
+		var element = document.createElement("div");
+		element.className = "message";
+		element.appendChild(textNode);
+
+		var textNode1 = document.createTextNode("Yippee!");
+		element.appendChild(textNode1);
+		console.log(element.childNodes);
+		element.normalize();		// 规范化文本节点SSSSS
+		console.log(element.childNodes);
+		element.firstChild.appendData(" this is a test!");
+		var str = element.firstChild.substringData(4,5);
+		console.log(str);
+		document.body.insertBefore(element, document.body.firstChild);
+
+		var node = element.firstChild.splitText(10);
+		console.log(node.data);
+		console.log(element.childNodes.length);
+
+	</script>
+</body>
+</html>
