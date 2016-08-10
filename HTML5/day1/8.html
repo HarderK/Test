@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div#test1 {
+			margin: 0;
+			width: 258px;
+			height:315px;
+			background: url(wolf.jpg) center no-repeat;
+			transform-style: preserve-3d;
+			animation-name: x-spin;
+			animation-duration: 20s;
+			animation-iteration-count: infinite;
+			animation-timing-function: linear;
+		}
+		
+		@keyframes x-spin {
+			0% {
+				transform: rotateX(0deg);
+			}
+			50% {
+				transform: rotateX(180deg);
+			}
+			100% {
+				transform: rotateX(360deg);
+			}
+		}
+
+		div#test2 {
+			width: 400px;
+			height: 200px;
+			border: 2px solid #FCF;
+			padding: 4px;
+			background: -moz-linear-gradient(top, #ccc, #000);
+			background-origin: padding-box;
+			background-clip: content-box;
+
+		}
+	</style>
+</head>
+<body>
+	<div id="test1"></div>
+	<div id="test2"></div>
+</body>
+</html>

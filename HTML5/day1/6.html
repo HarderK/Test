@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		p+div {
+			border: 1px solid #000;
+		}
+
+		p~div {
+			background: #9E9F9B;
+		}
+
+		.c2 {
+			width: 300px;
+			word-wrap: break-word;
+			border: 1px solid #F00;
+		}
+
+		.c3 {
+			width: 300px;
+			word-wrap: break-word;
+			/*word-break: break-all;*/
+			border: 1px solid #F90;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<p>this is a test</p>
+		<div>hello world</div>
+		<div>hello world</div>
+	</div>
+	<div class="c2">This is all English. This is all English. This is all English. This is all English.</div>
+	<div class="c2">全是中文的情况。全是中文的情况。 全是中文的情况</div>
+	<div class="c3">中英文混排的情况。Chinese and English. 中英文混排的情况。Chinese and English.</div>
+</body>
+</html>
