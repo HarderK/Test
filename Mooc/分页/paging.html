@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Page</title>
+	<style>
+		.page-normal {
+			text-align: center;
+			font-size : 0;
+		}
+
+		.page-normal a, .page-normal span {
+			text-decoration: none;
+			border: 1px solid #ff9600;
+			color: #ff6500;
+			padding: 5px 7px;
+			font-size: 18px;
+			margin-left: 10px;
+			border-radius: 3px;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+		}
+
+		.page-normal a:hover, .page-normal .page-current {
+			background-color: #ffbe94;
+		}
+
+		.page-normal i {
+			display: inline-block;
+			width: 5px;
+			height: 9px;
+			background: url(bg_hotsale.gif) 
+		}
+		.page-prev i {
+			background-position: -80px -608px;
+			margin-right: 4px;
+		}
+		.page-next i {
+			background-position: -74px -608px;
+			margin-left: 4px;
+		}
+	</style>
+</head>
+<body>
+	<div class="page-normal">
+		<span class="page-prev"><i></i>上一页</span>
+		<span class="page-current">1</span>
+		<a href="#">2</a>
+		<a href="#">3</a>
+		<a href="#">4</a>
+		<a href="#">5</a>
+		<a href="#">6</a>
+		<a href="#">7</a>
+		<a href="#" class="page-next">下一页<i></i></a>
+	</div>
+</body>
+</html>

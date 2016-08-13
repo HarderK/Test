@@ -5,14 +5,79 @@
 	<title>Document</title>
 	<style type="text/css">
 		/* *{color:gray;} */
+		* {
+			margin: 0;
+			padding: 0;
+		}
 		h1#page-title{color: black;}
-		#toolbar{color:white; background-color: black;}
+		#toolbar{color:white; background-color: black; border: 1px solid #000;}
 		#toolbar a:link{color: white;}
+
+		span {
+			line-height: 30px;
+			padding-left: 10px;
+			margin-top: 10px;
+			padding-top: 10px;
+			border-top: 1px solid green;
+		}
+		#branding {
+			width: 70em;
+			height:10em;
+			position: relative;
+			border: 5px solid #000;
+			background-color: #C4A6A6;
+			padding: 5px 5px 5px 5px;
+		}
+
+		#branding .tel {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			border: 1px solid #CCC;
+		}
+		div.float {
+			float: left;
+			width: 30em;
+			height: 20em;
+			border: 1px solid #000;
+		}
+
+		.news {
+			background: gray;
+			border: solid 1px #000;
+
+		}
+
+		.news img {
+			float: left;
+
+		}
+		.news p {
+			float: right;
+		}
 	</style>
 </head>
 <body>
 	<h1 id="page-title">Meerkat <em>Central</em></h1>
 	<p>Welcome to the best place on the web for meerkat information</p>
 	<div id="toolbar"><a href="#">Home|Products|Services|Contact|About</a></div>
+	<span>this is a test</span>
+
+	<div id="branding">
+		<p class="tel">Tel: 0485 838 6163</p>
+		<p class="tel"> This is a test</p>
+	</div>
+
+	<div class="float"></div>
+	<img src="button.png" alt="">
+	<p> f;asdlkjfkj;fkasdjfffffffffffffffffffffffffffffffffffffffffffffffff;ksajd;asdkf;as;djasd;jf</p>
+	<div style="width: 100px">test</div>
+
+	<div class="news">
+		<img src="button.png" alt="">
+		<p>Some text</p>
+		<br style="clear: both;"> 
+		
+	</div>
 </body>
 </html>
