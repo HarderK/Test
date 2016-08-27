@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="jquery-3.1.0.js"></script>
+	<style>
+		.container {
+			height: 36px;
+			background:#F4712C;
+			padding: 2px;
+		}
+		ul, li {
+			margin: 0;
+			padding: 0;
+		}
+		ul {
+			list-style: none;
+		}
+		.list li {
+			height: 36px;
+			line-height: 36px;
+			text-align: center;
+			background-color: #D6D6D6;
+			display: none;
+		}
+		.list li:hover {
+			cursor: pointer;
+		}
+
+		.list {
+			width: 50px;
+			height: 36px;
+			overflow: hidden;
+		}
+
+		.list li.selected {
+			background-color: #706E6E;
+			display: block;
+		}
+		
+		input:focus {
+			border: 1px solid #f00;
+			background: #FCC;
+		}
+
+		textarea {
+			max-height: 500px;
+			min-height: 50px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="list">
+			<ul>
+				<li class="selected">商品</li>
+				<li>店铺</li>
+			</ul>
+		</div>
+	</div>
+	<form action="">
+		<select name="" id="" multiple="multiple">
+			<option value="test1" >test1</option>
+			<option value="test2">test2</option>
+			<option value="test3">test3</option>
+			<option value="test4" selected>test4</option>
+		</select>
+		<input type="text">
+		<div>
+			<span class="bigger">放大</span>
+			<span class="smaller">缩小</span>
+		</div>
+		<textarea name="" id="" cols="20" rows="8"></textarea>
+
+
+		<input type="checkbox" name="items[]" checked value="test1">test1</input>
+		<input type="checkbox" name="items[]">test2</input>
+		<input type="checkbox" name="items[]">test3</input>
+		<input type="checkbox" name="items[]" checked value="test4">test4</input>
+	</form>
+	<p>
+		this is a test
+	</p>
+	<button>转换</button>
+	<script>
+		$(function(){
+			$(".list li").click(function(){
+				// $(this).toggleClass("selected")
+				$(".list").css("height","72px");
+				$(".list li").css("display", "block");
+				// $(this).css("display", "block");
+				// $(this).toggle(function(){alert("hi")}, function(){alert("hi1")});
+				$("select").val(["test2", 'test3']);
+			});
+			// $("select").val(["test2", 'test3']);
+
+			$("p").hover(function(){
+				$(this).css("background", "#808080");
+			}, function(){
+				$(this).css("background", "#FFF");
+			});
+
+			$(":text").keyup(function(event){
+				console.log(event.which);
+				console.log(event.shiftKey);
+			});
+
+			var $area = $("textarea");
+			$(".bigger").click(function(){
+				$area.animate({height: "+=50"}, 1000);
+			});
+			$(".smaller").click(function(){
+				$area.animate({height: "-=50"}, 1000);
+			});
+
+			$("button").click(function(){
+				var item = $("[name=items]:checkbox")[0];
+				item.removeAttribute("checked");
+			});
+
+			var str = $(":checkbox[name^=items]").serializeArray();
+			console.log(str);
+		})
+
+	</script>
+</body>
+</html>

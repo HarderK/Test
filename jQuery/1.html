@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="jquery-3.1.0.js" type="text/javascript"></script>
+	<style>
+		table {
+			border-collapse: collapse;
+			/*border-spacing: 2px;*/
+		}
+		tr {
+			background-color: #C0C0C0;
+			border: 1px solid #F00;
+		}
+		td {
+			background-color: #808080;
+		}
+	</style>
+</head>
+<body>
+	<table>
+		<caption>I have a dream</caption>
+		<thead><tr><td 	>标题</td>
+		<td>名称</td></tr></thead>
+		<tbody>
+			<tr>
+				<td>test01</td>
+				<td>test02</td>
+			</tr>
+			<tr>
+				<td>test11</td>
+				<td>test12</td>
+			</tr>
+			<tr>
+				<td>test21</td>
+				<td>test22</td>
+			</tr>
+			<tr>
+				<td>test31</td>
+				<td>test32</td>
+			</tr>
+			<tr>
+				<td>test41</td>
+				<td>test42</td>
+			</tr>
+		</tbody>
+	</table>
+	<input type="checkbox" id="cr"> <label for="cr">我已经阅读了上面制度</label>
+	<script>
+		$(document).ready(function(){
+			var $cr = $("#cr");
+			var cr = $cr[0];
+
+			$cr.click(function(){
+				if(cr.checked){
+					alert("感谢您的支持，您可以继续操作！");
+				}
+			})
+
+			// $("tbody tr:even").css("backgroundColor", "#888");
+		});
+	</script>
+</body>
+</html>
