@@ -1,0 +1,23 @@
+@charset "utf-8";
+.title {
+  width: 666px;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.title h3 {
+  float: left;
+}
+.title ul {
+  list-style-type: none;
+  overflow: hidden;
+}
+.title ul li {
+  float: left;
+}
+.title ul a {
+  text-decoration: none;
+  color: #66D16A;
+}

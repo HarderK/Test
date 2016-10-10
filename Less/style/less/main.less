@@ -1,0 +1,175 @@
+@charset"utf-8";
+
+// 我是不被编译的
+/* 我是被编译的 */
+body {
+	background: #ff0;
+}
+
+// 变量
+@test_width: 300px;
+@test_height: 100px;
+
+.test {
+	width: @test_width;
+	height: @test_height;
+	background: #f00;
+	.border;
+}
+
+.border {
+	border: 2px solid #808080;
+}
+
+.test2 {
+	.test;
+	.border01(5px);
+}
+
+.border01(@border_width){
+	border: @border_width solid #808080;
+}
+
+.radius(@radius: 5px) {
+	-webkit-border-radius: @radius;
+	-moz-border-radius: @radius;
+	border-radius: @radius;
+}
+.shadow(@offset: 3px, @blur: 2px) {
+	-webkit-box-shadow: @offset @offset @blur blue; 
+	-moz-box-shadow: @offset @offset @blur blue; 
+	box-shadow: @offset @offset @blur blue; 
+}
+
+.test3 {
+	.test;
+	.border01(5px);
+	.radius(10px);
+	.shadow();
+}
+
+.triangle(top, @width: 5px, @color: #ccc) {
+	border-color: @color transparent transparent transparent;
+	border-width: @width;
+}
+.triangle(left, @width: 5px, @color: #ccc) {
+	border-color: transparent transparent transparent @color;
+	border-width: @width;
+}
+.triangle(right, @width: 5px, @color: #ccc) {
+	border-color: transparent @color transparent transparent;
+	border-width: @width;
+}
+.triangle(bottom, @width: 5px, @color: #ccc) {
+	border-color: transparent transparent @color transparent;
+	border-width: @width;
+}
+
+.triangle(@_, @width: 5px, @color: #ccc) {
+	width: 0;
+	height: 0;
+	border-style: solid;
+	overflow: hidden;
+}
+
+.test4 {
+	.triangle(left, 20px);
+}
+
+
+// 嵌套
+.list{
+	width: 600px;
+	border: 2px solid #ccc;
+	padding: 0;
+	li {
+		background: #63D8E4;
+		list-style-type: none;
+		margin-bottom: 5px;
+		overflow: hidden;
+		padding: 0 5px 0 5px;
+	}
+	a {
+		float: left;
+		text-decoration: none;
+		color: inherit;
+		&:hover {	// &代表上一层选择器
+			color: red;
+		}
+	}
+	span {
+		float: right;
+		display: inline-block;
+		color: #7B1BCB;
+		font-size: 0.8em;
+		padding-top: 2px;
+		// height: 100%;	// 百分数只有当父块级元素显示的设置了高度值的时候才有效
+		// line-height: 30px;
+	}
+}
+
+// 运用@arguments
+.border_arg(@w: 3px, @type: solid, @color: red) {
+	border: @arguments;			// 将所有的参数值添加到此处
+}
+
+// 避免编译
+.tests {
+	width: ~'cal(400px - 200px)';
+}
+
+// 使用函数
+.test5 {
+	@width: 0.5;
+	width: percentage(@width);
+}
+
+// 利用混合，但有不编译输出混合. 在后面加括号
+.mixin() {
+  color: white;
+}
+.class {
+  .mixin();
+}
+
+.average(@a, @b) {
+	@average: ((@a + @b)/2);
+}
+.test6 {
+	.average(16px, 50px);
+	padding: @average;
+}
+
+// 条件混合
+.min(@a) when (lightness(@a) >= 50%) {
+	background-color: black;
+}
+.min(@a) when (lightness(@a) < 50%) {
+	background-color: white;
+}
+.min(@a) {
+	color: @a;
+}
+
+.truth (@a) when (@a = true) {}
+.mixx (@a) when (@a > 10), (@a < -10) {}// 只要一个条件判别式为真，则为真
+
+@midia : mobile;
+.sss (@a) when (@media = mobile) {
+
+}
+
+// 利用函数判断
+.minxin(@a, @b:0)  when (isnumber(@b)) {
+
+}
+.minxin(@a, @b: 0) when(default()) {}
+
+// 循环
+.loop(@counter) when (@counter > 0) {
+	.loop((@counter - 1));		// next iteration
+	width: (10px * @counter);
+}
+.test6 {
+	.loop(5);
+}
