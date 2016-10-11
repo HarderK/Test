@@ -172,4 +172,22 @@ body {
 }
 .test6 {
 	.loop(5);
+	color: color("red");
+}
+
+.generate-columns(4);
+
+.generate-columns(@n, @i: 1) when (@i =< @n) {
+  .column-@{i} {
+    width: (@i * 100% / @n);
+  }
+  .generate-columns(@n, (@i + 1));
+}
+
+@list: "banana", "tomato", "potato", "peach";
+
+.test7 {
+  width: length(@list);
+  // height: @list;
+  color: extract(@list, 3);
 }

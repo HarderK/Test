@@ -85,13 +85,21 @@ body {
   width: 30px;
   width: 40px;
   width: 50px;
+  color: #ff0000;
 }
-
-.generate-columns(4);
-
-.generate-columns(@n, @i: 1) when (@i =< @n) {
-  .column-@{i} {
-    width: (@i * 100% / @n);
-  }
-  .generate-columns(@n, (@i + 1));
+.column-1 {
+  width: 25%;
+}
+.column-2 {
+  width: 50%;
+}
+.column-3 {
+  width: 75%;
+}
+.column-4 {
+  width: 100%;
+}
+.test7 {
+  width: 4;
+  color: "potato";
 }
