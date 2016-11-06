@@ -12,8 +12,6 @@ var it = makeIterator(['a', 'b']);
 console.log(it.next());
 console.log(it.next());
 console.log(it.next());
-
-
 var m = new Map();
 var o = {p: 'hello world'};
 m.set(o, 'content');
@@ -106,4 +104,29 @@ console.log(Math.max(...[14,3,77]));
 	sum = (num1, num2) => { return num1 + num2;};
 	sum = (num1, num2) => ({id: num1, name: num2});
 	console.log(sum(2,3));
+}
+
+{
+	function Timer() {
+		setTimeout(() => {
+			console.log("id: ", this.id);
+		}, 100);
+	}
+
+	var id = 21;
+	Timer.call({id: 42});
+}
+
+{
+	function insert(value) {
+		return {into: function(array) {
+			return {after: function(afterValue) {
+				array.splice(array.indexOf(afterValue) + 1, 0, value);
+				return array;
+			}};
+		}};
+	}
+
+	// console.log(1);
+	console.log(1, insert(2).into([1,3]).after(1));
 }
