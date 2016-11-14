@@ -136,3 +136,13 @@ console.log(move({}));
 var arr = [1, undefined, 3];
 console.log(arr.map((x='yes') => x));
 
+
+
+{
+	for(let i = 0; i < 10; i++) {
+		let j = i++;
+		console.log(j);
+	}
+
+}
+
