@@ -36,7 +36,7 @@ function last() {
 }
 
 function go() {
-    return '<li><input type="text" value=""/>&nbsp; <button onclick="javascript: setPage()">Go</button></li>';
+    return '<li class="go"><input type="text" value=""/>&nbsp; <button onclick="javascript: setPage()">Go</button></li>';
 }
 
 function next() {
