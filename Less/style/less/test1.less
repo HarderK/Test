@@ -1,0 +1,39 @@
+.grand {
+  .parent {
+    & > & {
+      color: red;
+    }
+
+    & & {
+      color: green;
+    }
+
+    && {
+      color: blue;
+    }
+
+    &, &ish {
+      color: cyan;
+    }
+  }
+}
+
+.hello {
+
+  && {
+    color: #888;
+  }
+  .sup {
+    & {
+      text-decoration: none;
+    }
+    & &ish {
+      color: blue;
+    }
+
+    & > & {
+      background: #ccc;
+    }
+  }
+
+}

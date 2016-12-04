@@ -28,12 +28,12 @@ body {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
-  -webkit-box-shadow: 3px 3px 2px #0000ff;
-  -moz-box-shadow: 3px 3px 2px #0000ff;
-  box-shadow: 3px 3px 2px #0000ff;
+  -webkit-box-shadow: 3px 3px 2px blue;
+  -moz-box-shadow: 3px 3px 2px blue;
+  box-shadow: 3px 3px 2px blue;
 }
 .test4 {
-  border-color: transparent transparent transparent #cccccc;
+  border-color: transparent transparent transparent #ccc;
   border-width: 20px;
   width: 0;
   height: 0;

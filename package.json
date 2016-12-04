@@ -1,0 +1,27 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "index.html",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarderK/Test.git"
+  },
+  "keywords": [
+    "test"
+  ],
+  "author": "Yanxiong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HarderK/Test/issues"
+  },
+  "homepage": "https://github.com/HarderK/Test#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-less": "^3.3.0"
+  }
+}
