@@ -136,3 +136,5 @@ console.log(move({}));
 var arr = [1, undefined, 3];
 console.log(arr.map((x='yes') => x));
 
+
+console.log("这是一个传授")

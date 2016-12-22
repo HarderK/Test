@@ -130,3 +130,9 @@ console.log(Math.max(...[14,3,77]));
 	// console.log(1);
 	console.log(1, insert(2).into([1,3]).after(1));
 }
+
+function* gen() {
+	yield 123 + 466;
+}
+
+console.log(gen());
