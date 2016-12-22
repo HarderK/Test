@@ -39,7 +39,7 @@ function func(arg) {	// 不能在函数内部重复声明参数
 	// let arg;
 }
 
-function func1 (arg) {		
+function func1 (arg) {
 	{
 		let arg;
 	}
@@ -137,4 +137,12 @@ var arr = [1, undefined, 3];
 console.log(arr.map((x='yes') => x));
 
 
-console.log("这是一个传授")
+
+{
+	for(let i = 0; i < 10; i++) {
+		let j = i++;
+		console.log(j);
+	}
+
+}
+
