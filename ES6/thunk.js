@@ -1,15 +1,17 @@
-/*var Thunk = function(fn) {
-	return function() {
-		var args = Array.protoype.slice.call(arguments);
-		return function(callback) {
-			args.push(callback);
-			return fn.applay(this, args);
-		}
+const Thunk = fn => (...args) => {
+	return (callback) => {
+		args.push(callback);
+		return fn.apply(this, args);
 	}
-}
+};
 
-var readFileThunk = Thunk(fs.readFile);
-readFileThunk(fileA)(callback);*/
+let a = (num1, num2, func) => func(num1, num2);
+
+function max(num1, num2) {
+	return num1 - num2;
+}
+let readFile = Thunk(a);
+console.log(readFile(1, 2)(Math.max));
 
 function thunkify(fn) {
 	return function() {
