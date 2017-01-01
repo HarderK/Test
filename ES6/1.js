@@ -39,7 +39,7 @@ function func(arg) {	// 不能在函数内部重复声明参数
 	// let arg;
 }
 
-function func1 (arg) {		
+function func1 (arg) {
 	{
 		let arg;
 	}
