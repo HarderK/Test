@@ -27,6 +27,26 @@ Maybe.prototype.map = function(f) {
 	return this.isNothing() ? Maybe.of(null) : Maybe.of(f(this._value));
 }
 
+// map :: Functor f => (a -> b) ->
 var map = curry(function(f, any_functor_at_all) {
 	return any_functor_at_all.map(f);
+});
+
+var safeHead = function(xs) {
+    return Maybe.of(xs[0]);
+}
+
+var streetName = compose(map(_.prop('street')), safeHead, _.prop('adresses'));
+
+var withdraw = curry(function(amount, account) {
+    return account.balance >= account ? Maybeof({balance: account.balance - amount}) : Maybe.of(null);
 })
+
+// maybe :: b -> (a -> b) -> Maybe a -> b
+var maybe = curry(function(x, f, m){
+    return m.isNothing() ? x : f(m._value);
+})
+
+// getTwenty :: Account -> String
+var getTwenty = compose(maybe("you're broke!", finiseTransaction), withdraw(20));
+
