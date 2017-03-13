@@ -1,4 +1,4 @@
-var express = require('express'),
+/*var express = require('express'),
 	wsio = require('websocket.io');
 
 var positions = {}, total = 0;
@@ -48,4 +48,46 @@ function broadcast(msg) {
 }
 
 // Listen
+app.listen(3000);*/
+
+var express = require('express'),
+	wsio = require('websocket.io');
+
+var app = express();
+
+var ws = wsio.attach(app);
+
+app.use(express.static('public'));
+
+var positions = {},
+	total = 0;
+
+ws.on('connection', function(socket) {
+	socket.id = ++total;
+
+
+	socket.on('message', function(msg) {
+		try {
+			var pos = JSON.parse(msg);
+		} catch(e) {
+			return;
+		}
+
+		positions[socket.id] = pos;
+	});
+
+	socket.send(JSON.stringify(positions));
+
+	socket.on('close', function() {
+		delete positions[socket.id];
+	});
+});
+
+function broadcast(msg) {
+	for (var i = 0, l = ws.clients.length; i < l; i++) {
+		
+	}
+}
+
 app.listen(3000);
+

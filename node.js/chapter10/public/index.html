@@ -10,28 +10,22 @@
 	<script>
 		var lastMessage;
 
-		window.onload = function(){
-			// create socket
+		window.onload = function() {
 			var ws = new WebSocket('ws://localhost:3000');
-
-			ws.onopen = function(){
-				// send first ping()
+			ws.onopen = function() {
 				ping();
-			};
+			}
 
-			ws.onmessage = function(ev){
+			ws.onmessage = function(ev) {
 				console.log(' got: ' + ev.data);
-				document.getElementById('latency').innerHTML = new Date - lastMessage;
+				document.getElementById('latency') = new Date - lastMessage;
 
-				// ping again
 				ping();
-			};
+			}
 
-			function ping(){
-				// record the timestamp
-				lastMessage = new Date();
+			function ping() {
+				lastMessage = +new Date;
 
-				// send the message
 				ws.send('ping');
 			}
 		};
