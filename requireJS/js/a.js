@@ -1,6 +1,7 @@
-define(function(){
+define(['b'], function(b){
 	function fun1(){
-		alert("it works!");
+		// alert("it works!");
+		console.log(b.size)
 	}
 
 	// fun1();

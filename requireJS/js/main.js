@@ -12,7 +12,7 @@ require.config({
 })
 require(["jquery", "a"], function($) {
 	$(function() {
-		alert("load finished!!");
+		console.log("load finished!!");
 	})
 	// alert("load finished!");
 });
