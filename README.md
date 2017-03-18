@@ -1,3 +1,2 @@
-# Test
-programming folder
-this is test
+# 个人学习部分的实例代码
+- 包括红宝书、犀牛书、ES6、《精通CSS》、《CSS权威指南》、《锋利的jQuery》、node
