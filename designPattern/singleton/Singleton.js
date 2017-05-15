@@ -19,15 +19,10 @@ var createIframe = (function() {
 // 以上代码中创建对象和管理单例两个功能并没有分开
 // 并没有做到单一责任
 // func函数用来创建想要的对象,不要传匿名函数
-var getSingle = function(func) {
-	var result = {};
+var getSingle = function(fn) {
+	var result;
 	return function() {
-		if(result[func.name] === undefined) {
-			result[func.name] = func.apply(this, arguments);
-		}
-		
-		console.log(result);
-		return result[func.name];
+		return result || (result = fn.apply(this, arguments));
 	}
 }
 
@@ -36,4 +31,4 @@ var func = function() {
 }
 
 console.log(func.toString())
-getSingle(func)();
+console.log(getSingle(func)());
