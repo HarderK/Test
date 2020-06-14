@@ -2,9 +2,11 @@ for(var i =0; i < 10; i++);
 
 console.log(i);
 
+console.log(1)
+
 var arr = ["HAHA","Kingzhongguo","Liudashen","Songzhixiao","Gray"];
 
-for(var i in arr){
+for (var i in arr) {
 	console.log(i);
 	console.log(arr[i]);
 }
